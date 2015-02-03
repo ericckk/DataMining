@@ -1,21 +1,31 @@
 
 
 class Tweet(object):
-    def __init__(self, text, name=None, screenName=None, hashtags=None, location=None):
-        self._text = text.decode('ascii', 'ignore').lower()
-        self._name = name.decode('ascii', 'ignore').lower() 
-        self._screenName = screenName.decode('ascii', 'ignore').lower()
+    def __init__(self, text, name, screenName, description, hashtags, location):
+        
+        self._text = self._decode(text)
+        self._name = self._decode(name)
+        self._screenName = self._decode(screenName)
+        self._description = self._decode(description)
         self._hashtags, self.hashtagIndex = self._hashtagSplit(hashtags)
-        self._location = location.decode('ascii', 'ignore').lower()
+        self._location = self._decode(location)
         
     def __repr__(self):
-        strRep = self._text + '\n' + self._name + '\n' + self._screenName + '\n' + self._location + '\n'
+        strRep = "tweet: " + self._text + '\nname: ' + self._name + '\nscreen name: ' + self._screenName + '\ndescription: ' + self._description + '\nlocation: ' + self._location + '\nhashtags: '
         strRep += ' '.join(self._hashtags) + '\n' + '\n'
         return strRep
     
+    def _decode(self, text):
+        if text==None:
+            return ''
+        else:
+            return text.encode('ascii', 'replace')
+        
     def _hashtagSplit(self, hashtags):
         htags, indices = [], []
         for tag in hashtags:
-            htags.append(str(tag['text']))
-            indices.append(tag['indices'])      
+            t = tag['text']
+            i = tag['indices']
+            htags.append(self._decode(t))
+            indices.append(i)    
         return htags, indices

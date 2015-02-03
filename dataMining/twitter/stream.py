@@ -1,10 +1,6 @@
-import tweepy, json, sys, pickle
-from hireGround.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
+import tweepy, json, pickle
+from dataMining.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
 from dataMining.twitter.tweet import Tweet
-
-
-
-
 
 
 class StdOutListener(tweepy.StreamListener):
@@ -15,14 +11,28 @@ class StdOutListener(tweepy.StreamListener):
     def on_data(self, data):
         decoded = json.loads(data)
        
-        text = decoded['text'].encode('ascii', 'ignore')
-        name = decoded['user']['name'].encode('ascii', 'ignore')
-        screenName = decoded['user']['screen_name'].encode('ascii', 'ignore')
-        hashtag = decoded['entities']['hashtags']
-        location = decoded['user']['location'].encode('ascii', 'ignore')
-        tweet = Tweet(text, name, screenName, hashtag, location)
-        #self.pickleTweet(tweet)
+        #.encode('ascii', 'ignore')
+       
+        text = decoded['text']
+        name = decoded['user']['name']
+        screenName = decoded['user']['screen_name']
+        description = decoded['user']['description']
+        hashtags = decoded['entities']['hashtags']
+        location = decoded['user']['location']
+        tweet = Tweet(text, name, screenName, description, hashtags, location)
+        
         print(tweet)
+        '''
+        print(type(text.encode('ascii', 'replace')))
+        print(type(name.encode('ascii', 'replace')))
+        print(type(screenName.encode('ascii', 'replace')))
+        if description is not None:
+            print(type(description.encode('ascii', 'replace')))
+        print(hashtags)
+        if location is not None:
+            print(type(location.encode('ascii', 'replace')))
+        print('\n')
+        '''
         return True
           
     def pickleTweet(self, data):

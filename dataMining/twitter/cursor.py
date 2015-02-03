@@ -1,5 +1,5 @@
-import tweepy, pickle
-from hireGround.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
+import tweepy, pickle, os
+from dataMining.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CURSOR_FILE
 from dataMining.twitter.tweet import Tweet
 
 
@@ -19,24 +19,34 @@ class Cursor(object):
     def page(self, query):    
         tweetCount = 0
         pageCount = 0
-        
-        for page in tweepy.Cursor(self._api.search, q=query, rpp=100, lang='en').pages(5):
-            pageCount +=1
-            for tweet in page:
-                tweetCount +=1
-                text = tweet.text.encode('utf-8')
-                name = tweet.author.name.encode('utf8')
-                screenName = tweet.author.screen_name.encode('utf8')
-                hashtags = tweet.entities.get('hashtags')
-                location = tweet.user.location.encode('utf8')
-                t = Tweet(text, name, screenName, hashtags, location)
-                print(t)
-                
-            print('page: ' + str(pageCount) + '.....................')
-            print('pages: ' + str(pageCount) + ' tweet count: ' + str(tweetCount))
+        try:
+            for page in tweepy.Cursor(self._api.search, q=query, lang='en').pages():
+                pageCount +=1
+                for tweet in page:
+                    tweetCount +=1
 
+                    text = tweet.text
+                    name = tweet.author.name
+                    screenName = tweet.author.screen_name
+                    description = tweet.user.description
+                    hashtags = tweet.entities.get('hashtags')
+                    location = tweet.user.location
+                    tweetObject = Tweet(text, name, screenName, description, hashtags, location)
+                    print(tweetObject)
+                    #pickle.dump(tweetObject, self._filename)
+                
+                    
+
+                    
+                
+                print('page: ' + str(pageCount) + '.....................')
+                print('pages: ' + str(pageCount) + ' tweet count: ' + str(tweetCount) + '\n')
+        except tweepy.TweepError:
+            print('rate limit exceeded')
+            os.sys.exit(0)
             
 if __name__ == "__main__":
-    c = Cursor('g')
-    c.page('jobs information technology')
+    
+    c = Cursor(open(TWITTER_CURSOR_FILE, 'w'))
+    c.page('#jobs information technology')
     
