@@ -5,6 +5,15 @@ __pycache__/
 # macbook files
 .DS_Store
 
+# pickle
+*.p
+
+# output files
+twitter_cursor_output.p
+twitter_stream_output.p
+twitter_clean_data.txt
+
+
 # C extensions
 *.so
 
