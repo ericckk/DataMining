@@ -33,11 +33,7 @@ class Cursor(object):
                     location = tweet.user.location
                     tweetObject = Tweet(text, name, screenName, description, hashtags, location)
                     print(tweetObject)
-                    #pickle.dump(tweetObject, self._filename)
-                
-                    
-
-                    
+                    pickle.dump(tweetObject, self._filename)
                 
                 print('page: ' + str(pageCount) + '.....................')
                 print('pages: ' + str(pageCount) + ' tweet count: ' + str(tweetCount) + '\n')
