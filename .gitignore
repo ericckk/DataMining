@@ -2,6 +2,9 @@
 __pycache__/
 *.py[cod]
 
+# macbook files
+.DS_Store
+
 # C extensions
 *.so
 
