@@ -8,8 +8,8 @@ from settings import TWITTER_CURSOR_FILE, TWITTER_STREAM_FILE
 def getArgs():
 
     parser = argparse.ArgumentParser(description='data mining app')
-    parser.add_argument('-tc', '--cursor', nargs=1, type=str, action="store", )
-    parser.add_argument('-ts', '--stream', nargs=1, type=str, action="store", )
+    parser.add_argument('-tc', '--cursor', type=str, action="store", )
+    parser.add_argument('-ts', '--stream', type=str, action="store", )
     parser.add_argument('-ta', '--algorithm', nargs=1, type=str, action="store", )
     return parser.parse_args()
 
@@ -26,9 +26,9 @@ available_actions = {"cursor": twitterCursor, "stream": twitterStream,}
 if __name__=='__main__':
     
     args = vars(getArgs())
-    
-    
-    method = args.items().pop()[0]
-    additional = args.items().pop()[1]
+    print(args)
+    l = [{k:v} for k, v in args.iteritems() if v is not None]
+    method, methodArgs = l.pop().popitem()
+
     print(args.items())
-    available_actions[method](additional)
+    available_actions[method](methodArgs)
