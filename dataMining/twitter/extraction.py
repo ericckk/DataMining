@@ -2,7 +2,7 @@ import re
 from textblob import TextBlob
 from nltk.corpus import stopwords
 from nltk.tag.stanford import NERTagger
-from hireGround.settings import STANFORD_NER, STANFORD_NER_CON11, STANFORD_NER_MUC7, STANFORD_NER_JAR
+from dataMining.settings import STANFORD_NER, STANFORD_NER_CON11, STANFORD_NER_MUC7, STANFORD_NER_JAR
 
 
 
