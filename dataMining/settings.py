@@ -1,3 +1,9 @@
+__author__ = "Justin Milanovic"
+__copyright__ = "Copyright 2015, HireGround"
+__version__ = "1.0.0"
+__email__ = "justinmilanovic@gmail.com"
+__status__ = "Development"
+
 from os import path
 
 TWITTER_CONSUMER_KEY ="rtSI6qY8er6klGgPFDwNVSWAA"

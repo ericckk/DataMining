@@ -1,3 +1,9 @@
+__author__ = "Justin Milanovic"
+__copyright__ = "Copyright 2015, HireGround"
+__version__ = "1.0.0"
+__email__ = "justinmilanovic@gmail.com"
+__status__ = "Development"
+
 import re
 from textblob import TextBlob
 from nltk.corpus import stopwords
@@ -5,11 +11,7 @@ from nltk.tag.stanford import NERTagger
 from dataMining.settings import STANFORD_NER, STANFORD_NER_CON11, STANFORD_NER_MUC7, STANFORD_NER_JAR
 
 
-
-
-
-#---------------------------------------------------------------------------------- 
-def stanford1(tweet):
+def stanford(tweet):
     st = NERTagger(STANFORD_NER, STANFORD_NER_JAR) 
     return st.tag(tweet.split())
 
@@ -44,14 +46,33 @@ def hyperlinks(tweet):
     
 def tags(tweet): 
     return TextBlob(tweet).tags
+
+def stanfordContext(tweet):
+    t = stanford(tweet)
+    print(t)
+    l = []
+    for x in t:
+        x = t.pop()
+        j = x[0].encode('ascii', 'replace')
+        k = x[1].encode('ascii', 'replace')
+        if k != 'O':
+            l.append(j)
+
+    stop = set(l)
+
+    words = tweet.split()
+    cleanedData = [word for word in words if word not in stop ]
+    cleanedData = " ".join(cleanedData)
+    cleanedData = hyperlinks(cleanedData)
+    cleanedData = hashtags(cleanedData)
+    cleanedData = punctuation(cleanedData)
+    
+    print(tags(cleanedData.lower()))
+        
+    print(cleanedData.strip())
+
  
 if __name__ == "__main__":
-    t = "#California #Jobs Project Manager, Information Technology: Los Angeles Cloudtrend Inc. Specializes in building... http://t.co/t6MtQpQmyx"
-    #e = Extractor()
-    data1 = stanford1(t)
-    print(data1)
-    data2 = stanfordCon11(t)
-    print(data2)
-    data3 = stanfordMuc7(t)
-    print(data3)    
+    pass
+
            

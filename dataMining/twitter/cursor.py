@@ -1,3 +1,11 @@
+__author__ = "Justin Milanovic"
+__copyright__ = "Copyright 2015, HireGround"
+__version__ = "1.0.0"
+__email__ = "justinmilanovic@gmail.com"
+__status__ = "Development"
+
+
+
 import tweepy, pickle, os
 from dataMining.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CURSOR_FILE
 from dataMining.twitter.tweet import Tweet
