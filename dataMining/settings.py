@@ -18,6 +18,4 @@ TWITTER_CLEAN_DATA = path.dirname(__file__)  + '/data/twitter_clean_data.txt'
 TWITTER_CUSTOM_STOPWORDS = path.dirname(__file__)  + '/data/custom_stopwords.txt'
 
 STANFORD_NER = '/usr/share/stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz'
-STANFORD_NER_CON11 = '/usr/share/stanford-ner/classifiers/english.conll.4class.distsim.crf.ser.gz'
-STANFORD_NER_MUC7 = '/usr/share/stanford-ner/classifiers/english.muc.7class.distsim.crf.ser.gz'
 STANFORD_NER_JAR = '/usr/share/stanford-ner/stanford-ner.jar'

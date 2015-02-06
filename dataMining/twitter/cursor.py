@@ -39,7 +39,7 @@ class Cursor(object):
                     description = tweet.user.description
                     hashtags = tweet.entities.get('hashtags')
                     location = tweet.user.location
-                    tweetObject = Tweet(text, name, screenName, description, hashtags, location)
+                    tweetObject = Tweet(text=text, name=name, screenName=screenName, description=description, hashtags=hashtags, location=location)
                     print(tweetObject)
                     pickle.dump(tweetObject, self._filename)
                 

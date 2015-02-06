@@ -17,29 +17,16 @@ class StdOutListener(tweepy.StreamListener):
     
     def on_data(self, data):
         decoded = json.loads(data)
-       
-        #.encode('ascii', 'ignore')
-       
+             
         text = decoded['text']
         name = decoded['user']['name']
         screenName = decoded['user']['screen_name']
         description = decoded['user']['description']
         hashtags = decoded['entities']['hashtags']
         location = decoded['user']['location']
-        tweet = Tweet(text, name, screenName, description, hashtags, location)
+        tweet = Tweet(text=text, name=name, screenName=screenName, description=description, hashtags=hashtags, location=location)
         
         print(tweet)
-        '''
-        print(type(text.encode('ascii', 'replace')))
-        print(type(name.encode('ascii', 'replace')))
-        print(type(screenName.encode('ascii', 'replace')))
-        if description is not None:
-            print(type(description.encode('ascii', 'replace')))
-        print(hashtags)
-        if location is not None:
-            print(type(location.encode('ascii', 'replace')))
-        print('\n')
-        '''
         return True
           
     def pickleTweet(self, data):

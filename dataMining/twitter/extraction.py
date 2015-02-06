@@ -8,32 +8,44 @@ import re
 from textblob import TextBlob
 from nltk.corpus import stopwords
 from nltk.tag.stanford import NERTagger
-from dataMining.settings import STANFORD_NER, STANFORD_NER_CON11, STANFORD_NER_MUC7, STANFORD_NER_JAR
+from dataMining.settings import STANFORD_NER, STANFORD_NER_JAR, TWITTER_CUSTOM_STOPWORDS
 
 
 def stanford(tweet):
     st = NERTagger(STANFORD_NER, STANFORD_NER_JAR) 
     return st.tag(tweet.split())
 
-def stanfordCon11(tweet):
-    st = NERTagger(STANFORD_NER_CON11, STANFORD_NER_JAR) 
-    return st.tag(tweet.split())
+def stanfordContext(tweet):
+    t = stanford(tweet)
 
-def stanfordMuc7(tweet):
-    st = NERTagger(STANFORD_NER_MUC7, STANFORD_NER_JAR)
-    return st.tag(tweet.split())
+    nerList = []
+    for x in t:
+        x = t.pop()
+        j = x[0].encode('ascii', 'replace')
+        k = x[1].encode('ascii', 'replace')
+        if k != 'O':
+            nerList.append(j)
+    return set(nerList)
        
-def stopwords(tweet):
+def stopWords(tweet):
+    englishStops = stopwords.words('english')
+    
+    stopWordsFile = open(TWITTER_CUSTOM_STOPWORDS, 'r')
+    customStops = []
+    for stopWord in stopWordsFile:
+        customStops.append(stopWord.rstrip('\n'))
+        customStops.append(stopWord.rstrip('\n').title())
+    
+    return set(englishStops).union(set(customStops))
+
+def cleaner(tweet, stopWords):
     words = tweet.split()
-    englishStops = set(stopwords.words('english'))
-    with open('C:/path/numbers.txt', 'r') as f:
-        customStops = f.readlines()
-        combinedStops = set(englishStops).union(set(customStops))
-        cleanedData = [word for word in words if word not in combinedStops ]
-    return " ".join(cleanedData)
+    cleanedData = [word for word in words if word not in stopWords]
+    cleanedData = " ".join(cleanedData)
+    return cleanedData
 
 def punctuation(tweet):
-    return re.sub(r"(-|;|:|\.|,|\(|\)|\|\\|\/)", "", tweet) 
+    return re.sub(r"(-|;|:|\.|,|\(|\)|\|\\|\/|\|)", "", tweet) 
         
 def replies(tweet):
     return re.sub(r"@\w*", "", tweet)
@@ -45,34 +57,23 @@ def hyperlinks(tweet):
     return re.sub(r"http://.*|https://.*", "", tweet)
     
 def tags(tweet): 
-    return TextBlob(tweet).tags
+    tweetTags = TextBlob(tweet).tags
+    nounList = [pos[0] for pos in tweetTags if pos[1][0] == 'N']
+    return ' '.join(nounList) 
 
-def stanfordContext(tweet):
-    t = stanford(tweet)
-    print(t)
-    l = []
-    for x in t:
-        x = t.pop()
-        j = x[0].encode('ascii', 'replace')
-        k = x[1].encode('ascii', 'replace')
-        if k != 'O':
-            l.append(j)
 
-    stop = set(l)
-
-    words = tweet.split()
-    cleanedData = [word for word in words if word not in stop ]
-    cleanedData = " ".join(cleanedData)
-    cleanedData = hyperlinks(cleanedData)
-    cleanedData = hashtags(cleanedData)
-    cleanedData = punctuation(cleanedData)
-    
-    print(tags(cleanedData.lower()))
-        
-    print(cleanedData.strip())
-
+def runner(tweet):    
+    clean = hyperlinks(t)
+    clean = punctuation(clean)
+    clean = cleaner(clean, stanfordContext(t))
+    clean = cleaner(clean, stopWords(t))
+    clean = tags(clean)
+    clean = replies(clean)
+    return clean
  
 if __name__ == "__main__":
-    pass
-
+    t = "Now Hiring: is at Information Technology Teaching Assistant | Year Up Chicago: US - IL - Chicago | http://t.co/j1Y3KF5d48 #jobs"
+    clean = runner(t)
+    print(t)
+    print(clean)
            
