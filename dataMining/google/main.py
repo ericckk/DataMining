@@ -41,17 +41,25 @@ def processText(file, jobQuery):
     
     text = text.replace("\\n", " ")
     text = text.replace("\\xa0", "")
+    text = text.replace("\\u201c", "")
+    text = text.replace("\\u201d", "")
     
     #print(text)
     tokens = nltk.sent_tokenize(text)
     tokens = [nltk.word_tokenize(sentence) for sentence in tokens]
     tokens = [nltk.pos_tag(word) for word in tokens]
-    
-    grammar = "list: {(<NN|JJ|VB|.>+<,>)*(<CC><NN|JJ|VB>*)?}"
-    
+    #print tokens
+    #list: {(<NN|JJ|VB|IN|VBG>+<,>)+(<CC><NN|JJ|VB|IN|VBG>+)*}
+    '''grammar = """
+            comma: {<NN|JJ|VB|IN|VBG>+<,>}
+            endlist: {<CC>(<NN|JJ|VB|IN|VBG>+)}
+            list: {<comma>+(<endlist>)}
+            """'''
+    grammar = "list: {(<NN|NNS|JJ|VB|IN|VBG>+<,>)+}"
     cp = nltk.RegexpParser(grammar)
     
     for sentence in tokens:
+        #break
         result = cp.parse(sentence)
         
         for node in result:
@@ -60,6 +68,7 @@ def processText(file, jobQuery):
             if type(node) is nltk.Tree:
                 if node.label() == 'list':
                     print node
+                    break
                     for element in node:
                         #print element[0]
                         if element[1] == "NN":
@@ -67,10 +76,8 @@ def processText(file, jobQuery):
                             
             if name != "":
                 print name
-        #print type(result)
-        #break
     
-    i = 0
+'''    i = 0
     j = 1
     found = True
     jobs = []
@@ -79,10 +86,7 @@ def processText(file, jobQuery):
     queryLength = len(queryTokens)
     #print(queryTokens)
     
-    
-    
-    
-    '''while i < len(tokens):
+    while i < len(tokens):
         found = True
         if tokens[i] == queryTokens[0]:
             
@@ -101,12 +105,10 @@ def processText(file, jobQuery):
         else:
             found = False
         if found:
-            print("Found Query")'''
-            
-            
+            print("Found Query")
             
             #determine if it is a list
-'''            j = i
+            j = i
             phrase = tokens[j]
             while tokens[j] != ".":
                  phrase = phrase + " " + tokens[j]
