@@ -13,6 +13,7 @@ from apiclient.discovery import build
 
 def getSnippets(response, output):
     #iterate through the keys in the query response (dictionary)
+    counter = 0
     for key in response.keys():
         #items key holds the link information
         if key == "items":
@@ -25,12 +26,13 @@ def getSnippets(response, output):
                         output.write("Snippet: ")
                         output.write(repr(itemValue[itemKey]))
                         output.write("\n")
-            
+                        counter = counter + 1
                     #print if it is a link
                     '''elif itemKey == "link":
                         output.write("Link: ")
                         output.write(itemValue[itemKey])
                         output.write("\n\n")'''
+    print("Amount of responses " + str(counter))
 
 
 def processText(file, jobQuery):
@@ -45,7 +47,7 @@ def processText(file, jobQuery):
     tokens = [nltk.word_tokenize(sentence) for sentence in tokens]
     tokens = [nltk.pos_tag(word) for word in tokens]
     
-    grammar = "list: {(<NN|JJ|VB|.>+<,>)*(<CC><NN|JJ|VB>+)?}"
+    grammar = "list: {(<NN|JJ|VB|.>+<,>)*(<CC><NN|JJ|VB>*)?}"
     
     cp = nltk.RegexpParser(grammar)
     
@@ -53,10 +55,11 @@ def processText(file, jobQuery):
         result = cp.parse(sentence)
         
         for node in result:
+                    
             name = ""
             if type(node) is nltk.Tree:
                 if node.label() == 'list':
-                    #print node
+                    print node
                     for element in node:
                         #print element[0]
                         if element[1] == "NN":
@@ -121,12 +124,12 @@ def processText(file, jobQuery):
 
 query = "jobs such as software engineer"
 
-processText("output/output0.txt", query)
+processText("output/output.txt", query)
 
 #print(jobs)
 
 
-'''api_key = "AIzaSyCHwlWEjEcdeH1KRnmIi9fq5Dnx2JBeVRw"
+api_key = "AIzaSyCHwlWEjEcdeH1KRnmIi9fq5Dnx2JBeVRw"
 search_Engine_ID = "016745198537660285174:espiwqmbexg"
 
 domain = "Information Technology"
@@ -136,8 +139,8 @@ form = ["such as", "including", "like"]
 counter = 0;
 query = "\"* Jobs such as Software Engineer\""
 
+'''
 output = open(("output/output.txt"), 'w+')
-
 for js in jobSynonym:
     for fm in form:
         query = "\"* " + domain + " " + js + " " + fm + "\""
@@ -153,8 +156,8 @@ for js in jobSynonym:
         response = service.cse().list(q = query, cx = search_Engine_ID).execute()
         
         getSnippets(response, output)
-        #pprint.pprint(response, output)'''
-
+        #pprint.pprint(response, output)
+'''
         
         
 
