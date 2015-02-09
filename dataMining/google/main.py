@@ -33,7 +33,8 @@ def getSnippets(response, output):
                         output.write(itemValue[itemKey])
                         output.write("\n\n")'''
     print("Amount of responses " + str(counter))
-
+    
+''' END OF getSnippets() FUNCTION '''
 
 def processText(file, jobQuery):
     f = open(file, 'r')
@@ -55,7 +56,12 @@ def processText(file, jobQuery):
             endlist: {<CC>(<NN|JJ|VB|IN|VBG>+)}
             list: {<comma>+(<endlist>)}
             """'''
-    grammar = "list: {(<NN|NNS|JJ|VB|IN|VBG>+<,>)+}"
+    grammar = """
+            list: {<NN|NNS|JJ|VB|IN|VBG>+<,>}
+            and: {<NN|NNS|JJ|VB|IN|VBG>*<CC><NN|NNS|JJ|VB|IN|VBG>+}
+            """
+            
+    #grammar = "and: {(<NN|NNS|JJ|VB|IN|VBG>+<,>)+<NN|NNS|JJ|VB|IN|VBG>*<CC><NN|NNS|JJ|VB|IN|VBG>+}"
     cp = nltk.RegexpParser(grammar)
     
     for sentence in tokens:
@@ -64,67 +70,37 @@ def processText(file, jobQuery):
         
         for node in result:
                     
-            name = ""
+            name = list(" ")
+            counter = 0
             if type(node) is nltk.Tree:
                 if node.label() == 'list':
-                    print node
-                    break
+                    #print node
+                    #break
                     for element in node:
                         #print element[0]
-                        if element[1] == "NN":
-                            name = name + element[0] + " "
-                            
-            if name != "":
-                print name
-    
-'''    i = 0
-    j = 1
-    found = True
-    jobs = []
-    jobQuery = "jobs such as"
-    queryTokens = nltk.word_tokenize(jobQuery)
-    queryLength = len(queryTokens)
-    #print(queryTokens)
-    
-    while i < len(tokens):
-        found = True
-        if tokens[i] == queryTokens[0]:
-            
-            while (j < queryLength):
-                #print(tokens[i+1])
-                #print(queryTokens[j])
-                if tokens[i+1] == ',':
-                    i = i + 1
-                    continue
-                elif tokens[i+1] != queryTokens[j]:
-                    found = False;
+                        if element[1] == ",":
+                            counter = counter + 1
+                            name.append("")
+                            continue
+                        if element[1] == "CC":
+                            counter = counter + 1
+                            name.append("")
+                            continue
+                        if element[1] == "NN" or element[1] == "NNS":
+                            name[counter] = name[counter] + element[0] + " "
+                elif node.label() == 'and':
+                    print node
                     break
-                i = i + 1
-                j = j + 1
-                
-        else:
-            found = False
-        if found:
-            print("Found Query")
+                            
+            if name[0] == " ":
+                continue
+            #print name
             
-            #determine if it is a list
-            j = i
-            phrase = tokens[j]
-            while tokens[j] != ".":
-                 phrase = phrase + " " + tokens[j]
-                 j = j+1
-                 
-            jobs = phrase.split(",");
-            
-            for job in jobs:
-                job = job.strip()
-        i = i+1'''
-        
-    #return jobs
+''' END OF processText() FUNCTION '''
 
 #nltk.download('all')
 
-query = "jobs such as software engineer"
+query = " "
 
 processText("output/output.txt", query)
 
@@ -141,25 +117,35 @@ form = ["such as", "including", "like"]
 counter = 0;
 query = "\"* Jobs such as Software Engineer\""
 
-'''
-output = open(("output/output.txt"), 'w+')
-for js in jobSynonym:
-    for fm in form:
-        query = "\"* " + domain + " " + js + " " + fm + "\""
-        print "Query is: " + query
+blacklist = ["\"* Information Technology occupations including\"", "\"* Information Technology occupations like\"",
+             "\"* Information Technology professions such as\"", "\"* Information Technology professions including\"",
+             "\"* Information Technology professions like\""]
 
+doQueries = False
 
-        service = build("customsearch", "v1", developerKey=api_key)
+if doQueries:
+    output = open(("output/output.txt"), 'w+')
+    for js in jobSynonym:
+        for fm in form:
+            query = "\"* " + domain + " " + js + " " + fm + "\""
+            
+            if query in blacklist:
+                continue
+            
+            print "Query is: " + query
+    
+    
+            service = build("customsearch", "v1", developerKey=api_key)
+    
+            #file that will hold the output
+            #will create the file if it does not exist (w+)
+            counter = counter + 1
+    
+            response = service.cse().list(q = query, cx = search_Engine_ID).execute()
+            
+            getSnippets(response, output)
+            #pprint.pprint(response, output)
 
-        #file that will hold the output
-        #will create the file if it does not exist (w+)
-        counter = counter + 1
-
-        response = service.cse().list(q = query, cx = search_Engine_ID).execute()
-        
-        getSnippets(response, output)
-        #pprint.pprint(response, output)
-'''
         
         
 

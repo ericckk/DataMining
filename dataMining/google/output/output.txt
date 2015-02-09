@@ -3,62 +3,41 @@ Snippet: u'find information technology jobs such as working at call centers, dev
 Snippet: u'Information technology jobs, such as web and mobile programming and \ndevelopment, account for the majority of earnings on Elance (59%), followed by \ncreative\xa0...'
 Snippet: u'Sep 16, 2013 ... demand health information technology jobs, such as data analytics, mobile \nhealthcare application development, and health IT security.'
 Snippet: u'Oct 3, 2010 ... Best Jobs for Introverts Information Technology jobs such as software engineers, \ncomputer systems analysts, and database administrators work\xa0...'
-Snippet: u'Several career opportunities are available in the technical field, with some jobs in \ngreat demand. Information technology jobs such as a network administrator,\xa0...'
 Snippet: u'Some entry level technology jobs start with as much as $90,000 per year. \nInformation technology jobs such as applications development can expect a \nstarting\xa0...'
 Snippet: u'Jul 31, 2013 ... Some point to the fact that information technology jobs such as software \nengineering offer better compensation than jobs traditionally viewed as\xa0...'
+Snippet: u'Several career opportunities are available in the technical field, with some jobs in \ngreat demand. Information technology jobs such as a network administrator,\xa0...'
 Snippet: u'Oct 28, 2011 ... ... high unemployment rate, many high-tech firms are struggling to fill many types \nof information technology jobs, such as software programmers\xa0...'
 Snippet: u'And the odds of landing such work depend heavily on what kind of job you \nchoose to pursue. Information-technology jobs (such as Web-page designers) \nand\xa0...'
 Snippet: u'Oct 28, 2014 ... Search job openings at Creative Information Technology. 2 Creative Information \nTechnology jobs including salaries, ratings, and reviews,\xa0...'
 Snippet: u"May 25, 2013 ... The bachelor's degree program will prepare students for employment within a \nvariety of information technology jobs including network and\xa0..."
 Snippet: u'Nov 18, 2014 ... Search job openings at Vinsys Information Technology. 2 Vinsys Information \nTechnology jobs including salaries, ratings, and reviews, posted\xa0...'
 Snippet: u'IT Services. Information Technology jobs including Software and Hardware \nEngineers, Database Design, Excel/VBA Administrators, Help Desk and more.'
+Snippet: u'More than 15 years of experience in consumer electronics and Information \ntechnology jobs including product development, product management, \napplication\xa0...'
 Snippet: u'Michael Page Banking & Financial Services covers Information Technology jobs \nincluding Architecture, Business Analyst, Business Manager, Data Warehouse,\xa0...'
 Snippet: u"Dec 27, 2013 ... Demand is increasing for information technology jobs including analytics, \nsoftware development and mobile application designers, so there's\xa0..."
 Snippet: u'More than 15 years of experience in consumer electronics and Information \ntechnology jobs including product development, product management, \napplication\xa0...'
 Snippet: u'... article naming New Orleans the \u201c3rd Best City\u201d nationally for information \ntechnology jobs including publishing, software entertainment and data \nprocessing.'
 Snippet: u'Sep 2, 2008 ... Similarly, world-leading software firms are bringing information technology jobs, \nincluding business process outsourcing, right into the villages\xa0...'
-Snippet: u'Aug 20, 2008 ... Similarly, world-leading software firms are bringing information technology jobs, \nincluding business process outsourcing, right into the villages\xa0...'
-Snippet: u'Save American Information Technology Jobs. 53 likes \xb7 2 talking about this. This \npage is about saving American IT jobs from those who utilize the US...'
+Snippet: u'Save American Information Technology Jobs. 53 likes \xb7 5 talking about this. This \npage is about saving American IT jobs from those who utilize the US...'
 Snippet: u"There's no doubt about it, you can get some great paying positions in the area of \nInformation Technology. Jobs like software developer ($90,530 per year),\xa0..."
 Snippet: u"Aug 27, 2012 ... To clarify, she's talking about network information technology jobs, like \nmaintaining and designing systems, as opposed to computer\xa0..."
-Snippet: u"It's true: Among the 50 \u201chottest\u201d jobs in the state are information technology jobs \nlike computer software engineers, computer systems analysts, actuaries,\xa0..."
 Snippet: u'Jan 20, 2015 ... Get Notified We can email you when Information Technology jobs like this \nbecome available: You need to enter an email address before\xa0...'
-Snippet: u'What are information technology jobs like? Many information technology jobs \ninvolve a great deal of communication and teamwork. Problem- solving, creative\n\xa0...'
+Snippet: u"It's true: Among the 50 \u201chottest\u201d jobs in the state are information technology jobs \nlike computer software engineers, computer systems analysts, actuaries,\xa0..."
 Snippet: u'Jul 31, 2014 ... Get Notified We can email you when Information Technology jobs like this \nbecome available: You need to enter an email address before\xa0...'
+Snippet: u'What are information technology jobs like? Many information technology jobs \ninvolve a great deal of communication and teamwork. Problem- solving, creative\n\xa0...'
+Snippet: u'Jan 28, 2015 ... Get Notified We can email you when Information Technology jobs like this \nbecome available: You need to enter an email address before\xa0...'
 Snippet: u'Jul 18, 2011 ... Computer Technology: Digital rendering for video game. Information technology \njobs like software and video game development are growing in\xa0...'
-Snippet: u'Jan 12, 2015 ... Get Notified We can email you when Information Technology jobs like this \nbecome available: You need to enter an email address before\xa0...'
 Snippet: u'Jun 13, 2012 ... Top ten countries for outsourcing. Among the top countries for outsourcing, India \nleads the pack as recipient of information technology jobs like\xa0...'
 Snippet: u'... contributed only a small share to total job growth\u2014about 7.5% of all new jobs. \nInformation technology occupations, such as programmers, systems analysts,\xa0...'
 Snippet: u'The Routing and Switching CCNA certification is appropriate for Information \nTechnology occupations such as network and computer systems operators,\xa0...'
-Snippet: u"related; some information technology occupations such as computer engineers \nand software engineers. \u25ab Ontario accounts for about 50 per cent of the country's\n\xa0..."
+Snippet: u'Chief Warrant Officer of the Information Professional Community provides \nexpertise in information, command and control, and space systems through the\xa0...'
 Snippet: u'Army Credentialing Opportunities Online (COOL) - MOS Information Technology \nSpecialist.'
+Snippet: u"related; some information technology occupations such as computer engineers \nand software engineers. \u25ab Ontario accounts for about 50 per cent of the country's\n\xa0..."
 Snippet: u'Gender-Biased Attitudes Toward Technology: 10.4018/978-1-59140-815-4.\nch110: During the past 30 years of investigation into the ratios of males and \nfemales\xa0...'
 Snippet: u'Professional & Business Services (emphasizing financial, engineering and \ninformation technology occupations such as computer systems and programming\n)\xa0...'
 Snippet: u'The opportunities in a variety of information technology (IT) occupations, such as \nsoftware engineer, systems analyst and consultant, combined with... Sample\xa0...'
 Snippet: u'Oct 7, 2013 ... ... have proliferated in number over the past decade. Information Technology \noccupations such as programming and Web development, where\xa0...'
 Snippet: u'various information technology occupations and pathways such as Networking \nSystems, Programming and Software Development, and Web Design. As a result\n\xa0...'
-Snippet: u'With respect to occupations, nearly 60 percent are computer/information \ntechnology related occupations, such as programmers, database administrators \nand\xa0...'
-Snippet: u'In 2013, seven percent were not a little more than the typical unemployment rate \nin America, but the interest in information technology occupations including\xa0...'
-Snippet: u'... and Services Administration resource, Careers in Health Information, provides \ndescriptions of common health information technology occupations, including:.'
-Snippet: u'In 2013, seven percent were not a little more than the typical unemployment rate \nin America, but the interest in information technology occupations including\xa0...'
-Snippet: u'Aug 25, 2014 ... In information technology-related occupations: Various, including A+, Solaris, \nMicrosoft, Cisco. Certified Network Administrator, Red Hat\xa0...'
-Snippet: u'Jul 1, 2012 ... in the Information technology occupations like network systems and data \ncommunications analysts and computer software engineers.'
-Snippet: u'Yet employment in information technology occupations like network systems and \ndata communications analyst and computer software engineer for applications\xa0...'
-Snippet: u'Yet employment in information technology occupations like network systems and \ndata communications analyst and computer software engineer for applications\xa0...'
-Snippet: u'Apr 9, 2014 ... About a quarter of the staff members are scientists and the remainder are in \ninformation technology professions such as system administrators,\xa0...'
-Snippet: u"... that is, on human capi- tal.12 Data from the U.S. Department of Labor's Bureau \nof Labor Statistics consistently rank information technology professions such as\xa0..."
-Snippet: u'May 5, 2011 ... Some elements of the Code are specific to information technology professions, \nsuch as "help develop security, backup, retention, recovery, and\xa0...'
-Snippet: u'... and certificates in law, business, taxation, accounting, information technology, \nand related professions such as psychology, health services management,\xa0...'
-Snippet: u'... business, taxation, accounting, finance, financial planning, information \ntechnology, and related professions such as psychology, health services \nmanagement,\xa0...'
-Snippet: u'making inroads to some areas of management such as sales and marketing, \npolicy and planning, and information technology, other professions such as.'
-Snippet: u'Nov 4, 2011 ... WGU-Texas will give degrees in Teaching, Business, Information Technology \nand Health Professions such as nursing. The plans that evolved\xa0...'
-Snippet: u'Toll Free 1800-200-3678 (India Only) Study in Golden Gate University USA. \nEdwise Give Admission Guidance for Admission in Golden Gate University, USA.'
-Snippet: u'It focuses on both quantitative and qualitative methods in information technology \nprofessions including surveys, interviews, need assessments, requirements\xa0...'
-Snippet: u"Apr 26, 2012 ... ... 50 industry-relevant accredited bachelor's and master's degrees in business, \ninformation technology, health professions, including nursing,\xa0..."
-Snippet: u'... Insolvency \xb7 Insurance & reinsurance \xb7 Intellectual property & information \ntechnology \xb7 Professions, including professional negligence, liability and \nregulation\xa0...'
-Snippet: u'Apr 29, 2014 ... ... degree programs in a variety of subjects including business, information \ntechnology, health professions including nursing and many more.'
-Snippet: u'Sep 10, 2011 ... Many find their way into information and technology professions including the \ndevelopment of new artificial intelligences. Some are also\xa0...'
-Snippet: u'The BLS categorizes information security analysts with other information \ntechnology professions, like computer network architects and web developers. \nThe BLS\xa0...'
 Snippet: u'Dec 17, 2005 ... Associations of information technology professionals, such as the lEEE Computer \nSociety, the Association for Computing Machinery, the British\xa0...'
 Snippet: u'will examine from an ethical perspective issues specific to information technology \nprofessionals, such as intellectual property, access, security and protection of\xa0...'
 Snippet: u'other information technology professionals, such as sys- tems analysts). Although \nevidence from previous research showed that individuals were able to\xa0...'
@@ -76,16 +55,16 @@ Snippet: u'Business technology managers often supervise a team of information te
 Snippet: u"Resourceful, inventive, accountable, spirited, and yes, competitive. Clients say \nwe share many of their defining traits. We'll treat your business like our\xa0..."
 Snippet: u'Recruited information technology professionals including: Scrum Masters, Project \nManager, Java/.Net Developers, UI/UX Developer, SAP Consultants,\xa0...'
 Snippet: u"In this course you will examine the complementary roles of the master's level-\nprepared nursing information technology professionals, including informaticists \nand\xa0..."
-Snippet: u'Credentialed project management professionals; Credentialed information \ntechnology professionals including certified information security professionals; 24 \nx 7\xa0...'
+Snippet: u'Led information technology professionals including senior project managers, \ndepartment managers, database architects, software engineers, and QA \nengineers\xa0...'
 Snippet: u"In this course you will examine the complementary roles of the master's level-\nprepared nursing information technology professionals, including informaticists \nand\xa0..."
 Snippet: u'This IEEE Computer Society periodical covers the many rapidly emerging issues \nfacing information technology professionals, including: organizing and utilizing\xa0...'
+Snippet: u"It's how service is rated. It's how clients choose their brokers. It's all riding on \nInformation Technology professionals like you. Our environment aims to be \nlightning\xa0..."
 Snippet: u'At Adecco, we connect information technology professionals like you with great \njobs. Whatever your area of expertise \u2013 and wherever and whenever you want to\n\xa0...'
-Snippet: u"It's how service is rated. It's how clients choose their brokers. It's all riding on \nInformation Technology professionals like you. Our environment aims to be \nlightning\xa0..."
 Snippet: u'Using a Clinical Data Repository to Estimate the Frequency and Costs of Adverse \nDrug Events. Jonathan S. Einbinder, MD, MPH, Kenneth Scully, MS.'
-Snippet: u"It's how service is rated. It's how clients choose their brokers. It's all riding on \nInformation Technology professionals like you. Our environment aims to be \nlightning\xa0..."
 Snippet: u'Sep 14, 2004 ... Collaborative Urban Information Systems: A Web Services approach by. Raj R. \nSingh. AB Economics, Brown University, 1991. Master in City\xa0...'
 Snippet: u"Oct 22, 2013 ... Many information technology professionals like to have their data centers close to \ntheir company's operations, which has sparked the term\xa0..."
 Snippet: u'Jun 25, 2014 ... Texas Health information technology professionals, like all system employees, \nare encouraged to take care of themselves to be more\xa0...'
 Snippet: u'In addition, the company has a dual career ladder or track program for its \ninformation technology professionals. Like many other companies, Alcon allows \ncasual\xa0...'
 Snippet: u'... "Grace Extended -Care" and "Zero Response Program" for IT services \ndesigned for Information Technology professionals like you. Grace Extended -\nCare and\xa0...'
 Snippet: u'All Recruiting Firms Are Not Created Equal. For over 20 years, we have been \nrecruiting talented Information Technology professionals like yourself and\xa0...'
+Snippet: u'Introduction. Information technology professionals, like other knowledge workers, \nare often interrupted in their daily work activity. These interruptions can lead to.'
