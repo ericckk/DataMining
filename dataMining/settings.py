@@ -16,6 +16,8 @@ TWITTER_STREAM_FILE = path.dirname(__file__)  + '/data/twitter_stream_output.p'
 TWITTER_CLEAN_DATA = path.dirname(__file__)  + '/data/twitter_clean_data.txt'
 
 TWITTER_CUSTOM_STOPWORDS = path.dirname(__file__)  + '/data/custom_stopwords.txt'
+TWITTER_CUSTOM_PHRASES_LEFT = [' is hiring ', ' is hiring a ', ' is looking for ', ' is looking for a ']
+TWITTER_CUSTOM_PHRASES_RIGHT = [' in ', ' at ']
 
 STANFORD_NER = '/usr/share/stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz'
 STANFORD_NER_JAR = '/usr/share/stanford-ner/stanford-ner.jar'
