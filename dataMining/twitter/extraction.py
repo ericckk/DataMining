@@ -181,6 +181,4 @@ def similarity(word1, word2):
 # local
      
 if __name__ == "__main__":
-    #p = 'http://t.co/Ju4CbTEiam Developer - AWS Sales Operations  #Seattle #Jobs http://t.co/yudRz40Uyq'
-    t = 'Information Technology (Enterprise/Arcitecture) GS-2210-11 (DEU-CTAP/ICTAP-Rob): Job Announcement N... http://t.co/XscU3q71EP #USA #Jobs'
-    print(cutoff(t))
+    pass
