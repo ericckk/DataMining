@@ -12,7 +12,7 @@ import nltk
 import re
 from apiclient.discovery import build
 
-def getSnippets(response, output):
+def getSnippets(response, output, links):
     #iterate through the keys in the query response (dictionary)
     counter = 0
     for key in response.keys():
@@ -29,10 +29,10 @@ def getSnippets(response, output):
                         output.write("\n")
                         counter = counter + 1
                     #print if it is a link
-                    '''elif itemKey == "link":
-                        output.write("Link: ")
-                        output.write(itemValue[itemKey])
-                        output.write("\n\n")'''
+                    elif itemKey == "link":
+                        links.write("Link: ")
+                        links.write(itemValue[itemKey])
+                        links.write("\n\n")
     print("Amount of responses " + str(counter))
     
 ''' END OF getSnippets() FUNCTION '''
@@ -101,7 +101,7 @@ def processText(file, jobQuery):
                             if element[0] == "jobs" or element[0] == "professionals" or element[0] == "occupations"or element[0] == "as"or element[0] == "including"or element[0] == "like":
                                 name[counter] = ""
                             else:
-                                name[counter] = name[counter] + element[0] + " "
+                                name[counter] = name[counter] + element[0] + " " + "(" + element[1] + ")" + " "
                               
                 
                 elif node.label() == 'and':
@@ -114,7 +114,7 @@ def processText(file, jobQuery):
                             if element[0] == "jobs" or element[0] == "professionals" or element[0] == "occupations"or element[0] == "as"or element[0] == "including"or element[0] == "like":
                                 name[counter] = ""
                             else:
-                                name[counter] = name[counter] + element[0] + " "
+                                name[counter] = name[counter] + element[0] + " " + "(" + element[1] + ")" + " "
                     
                                 
             if len(name) == 1:
@@ -129,9 +129,12 @@ def processText(file, jobQuery):
 
 #nltk.download('all')
 
+doQueries = True
+
 query = " "
 
-processText("output/output.txt", query)
+if not doQueries:
+    processText("output/outputNew.txt", query)
 
 #print(jobs)
 
@@ -140,7 +143,7 @@ api_key = "AIzaSyCHwlWEjEcdeH1KRnmIi9fq5Dnx2JBeVRw"
 search_Engine_ID = "016745198537660285174:espiwqmbexg"
 
 domain = "Information Technology"
-jobSynonym = ["jobs", "occupations", "professions", "professionals"]
+jobSynonym = ["jobs", "occupations", "professions"]
 form = ["such as", "including", "like"]
 
 counter = 0;
@@ -150,13 +153,24 @@ blacklist = ["\"* Information Technology occupations including\"", "\"* Informat
              "\"* Information Technology professions such as\"", "\"* Information Technology professions including\"",
              "\"* Information Technology professions like\""]
 
-doQueries = False
+blacklist2 = [("occupations", "including"), ("occupations", "like"), ("professions", "like")]
 
 if doQueries:
-    output = open(("output/output.txt"), 'w+')
+    outputName = "outputNew"
+    output = open(("output/" + outputName + ".txt"), 'w+')
+    links = open(("output/" + outputName + "links.txt"), 'w+')
+    
     for js in jobSynonym:
         for fm in form:
-            query = "\"* " + domain + " " + js + " " + fm + "\""
+            badQuery = False
+            for tuple in blacklist2:
+                if js == tuple[0] and fm == tuple[1]:
+                    badQuery = True
+            
+            if badQuery:
+                continue
+            
+            query = "\"* " + js + " " + fm + " software engineer" +"\""
             
             if query in blacklist:
                 continue
@@ -172,7 +186,7 @@ if doQueries:
     
             response = service.cse().list(q = query, cx = search_Engine_ID).execute()
             
-            getSnippets(response, output)
+            getSnippets(response, output, links)
             #pprint.pprint(response, output)
 
         
