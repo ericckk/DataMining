@@ -21,3 +21,26 @@ TWITTER_CUSTOM_PHRASES_RIGHT = [' in ', ' at ']
 
 STANFORD_NER = '/usr/share/stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz'
 STANFORD_NER_JAR = '/usr/share/stanford-ner/stanford-ner.jar'
+
+
+TWITTER_PUNCTUATION = r"(;|:|\.|,|\|)"
+TWITTER_HASHTAGS = r"#\w*"
+TWITTER_USERNAME = r"@\w*"
+TWITTER_HYPERLINKS = r"http://.*|https://.*"
+TWITTER_BRACKETS = r"(\(|\)|\[|\])"
+TWITTER_SQUARE_BRACKETS_TEXT = r"\[(.+?)\]"
+TWITTER_DASH_SLASH = r"(-|\/|\\)"
+TWITTER_CUTOFF = r"\w*\.{3}"
+TWITTER_US_STATES = r"^(?-i:A[LKSZRAEP]|C[AOT]|D[EC]|F[LM]|G[AU]|HI|I[ADLN]|K[SY]|LA|M[ADEHINOPST]|N[CDEHJMVY]|O[HKR]|P[ARW]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])$"
+TWITTER_LOCATIONS = r"(Ala(bama|ska)|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|District of Columbia|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Miss(issippi|ouri)|Montana|Nebraska|Nevada|New (Hampshire|Jersey|Mexico|York)|North (Carolina|Dakota)|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode Island|South (Carolina|Dakota)|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West Virginia|Wisconsin|Wyoming|A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])"
+
+TWITTER_REGEX = [TWITTER_HYPERLINKS, TWITTER_HASHTAGS, TWITTER_USERNAME, TWITTER_BRACKETS, TWITTER_SQUARE_BRACKETS_TEXT, TWITTER_CUTOFF, TWITTER_PUNCTUATION, TWITTER_LOCATIONS]
+
+
+
+
+
+
+
+
+

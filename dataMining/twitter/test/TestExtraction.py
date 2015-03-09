@@ -11,12 +11,13 @@ import unittest
 from dataMining.twitter.extraction import punctuation
 
 
-class TestExtractionFunctions(unittest.TestCase):
+class TestExtractionClass(unittest.TestCase):
     
     def testPunctuation(self):
         self.testString = ';Th:is ,is| a test.'
         self.assertEqual("This is a test", punctuation(self.testString))
         
+    
 
 if __name__ == '__main__':
     unittest.main()

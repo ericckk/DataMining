@@ -6,10 +6,9 @@ __status__ = "Development"
 
 
 #------------------------------------------------------------------------------
-# imports
 
-
-from dataMining.settings import STANFORD_NER, STANFORD_NER_JAR, TWITTER_CUSTOM_STOPWORDS, TWITTER_CUSTOM_PHRASES_LEFT, TWITTER_CUSTOM_PHRASES_RIGHT
+from dataMining.settings import STANFORD_NER, STANFORD_NER_JAR, TWITTER_REGEX, TWITTER_CUSTOM_STOPWORDS, TWITTER_CUSTOM_PHRASES_LEFT, TWITTER_CUSTOM_PHRASES_RIGHT,\
+    TWITTER_LOCATIONS
 from dataMining.twitter.tweet import Tweet
 
 import re
@@ -22,9 +21,8 @@ from nltk.corpus import stopwords
 from nltk.tag.stanford import NERTagger
 from nltk.corpus.reader import TaggedCorpusReader
 
-
 #------------------------------------------------------------------------------
-# functions    
+    
     
 def stanford(tweet):
     st = NERTagger(STANFORD_NER, STANFORD_NER_JAR) 
@@ -57,40 +55,15 @@ def cleaner(tweet, stopWords):
     return cleanedData
 
 #------------------------------------------------------------------------------
-# regex    
 
-# ; : . , |
-def punctuation(tweet):
-    return re.sub(r"(;|:|\.|,|\|)", "", tweet)
+def regex_removal(tweet):
+    text = tweet.text
+    for expression in TWITTER_REGEX:
+        text = re.sub(expression, "", text)   
+    return text
  
-# @username        
-def username(tweet):
-    return re.sub(r"@\w*", "", tweet)
-
-def hashtags(tweet):
-    return re.sub(r"#\w*", "", tweet) 
-    
-def hyperlinks(tweet):
-    return re.sub(r"http://.*|https://.*", "", tweet)
-
-# () [] remove brackets leave text
-def brackets(tweet):
-    return re.sub(r"(\(|\)|\[|\])", "", tweet) 
-
-# remove everything within brackets
-def bracketText(tweet):
-    tweet = re.sub(r'\[(.+?)\]', "", tweet)
-    return re.sub(r'\([^)]*\)', "", tweet)
-
-# - / \
-def dashSlash(tweet):
-    return re.sub(r"(-|\/|\\)", " ", tweet)
-
-def cutoff(tweet):
-    return re.sub(r"\w*\.{3}", "", tweet)
-
 def phraseLeft(tweet):
-    text = tweet
+    text = tweet.text
     for phrase in TWITTER_CUSTOM_PHRASES_LEFT:
         index = text.find(phrase)
         if index != -1:
@@ -99,7 +72,7 @@ def phraseLeft(tweet):
     return text
 
 def phraseRight(tweet):
-    text = tweet
+    text = tweet.text
     for phrase in TWITTER_CUSTOM_PHRASES_RIGHT:
         index = text.find(phrase)
         if index != -1:
@@ -116,69 +89,39 @@ def nltkTags(tweet):
     tags = nltk.pos_tag(text)
     return [pos[1] for pos in tags]
 
-
 # doesnt work - causes changes correctly spelled words    
 def spellcheck(tweet):
     return TextBlob(tweet).correct()
 
 
-
 #------------------------------------------------------------------------------
 # runner
 
-def metaData(tweet):
-    text = tweet.text
-    return tweet.metaData()
+
 
 def runner(tweet):   
     if type(tweet) != Tweet:
         pass
     else: 
-        metaDataList = metaData(tweet)
+
         text = tweet.text
         
-        text = phraseLeft(text)
-        text = phraseRight(text)
-        text = cutoff(text)
+        text = phraseLeft(tweet)
+        text = phraseRight(tweet)
+        text = regex_removal(tweet)
         
-        # regex removal
-        text = hyperlinks(text)
-        text = hashtags(text) 
-        text = username(text)   
-        text = bracketText(text)
-
         # ner - organization, location, person
-        nerList = stanfordContext(tweet.text)
-        text = punctuation(text)        
+        nerList = stanfordContext(tweet.text)       
         text = cleaner(text, nerList)
         # stopwords
         text = cleaner(text, stopWords(tweet.text))
         # metadata
-        text = cleaner(text, metaDataList)
-        
-        #text = dashSlash(text)
-        #text = tags(text)
-        #text = spellcheck(text)
-        
-        tb = TextBlob(text)
-        words = tb.words
-        test = ' '.join(words)
-        
-        return test
+        text = cleaner(text, tweet.metaData())
+
+        return text.strip()
 
     
-    
-#------------------------------------------------------------------------------
-# experimental
-
-def similarity(word1, word2):
-    word = Word(word1).get_synsets()
-    word2 = Word(word2).get_synsets()   
-    return word[0].path_similarity(word2[0])
-    
-
-#------------------------------------------------------------------------------
-# local
-     
 if __name__ == "__main__":
-    pass
+    print('intitializing...')
+    t = Tweet(text="RT @jobz4it: #jobs4u #jobs Information Technology (IT) Solutions Analyst, Washington, DC http://t.co/z0OVXm1xFC #infotech")
+    print(runner(t))
