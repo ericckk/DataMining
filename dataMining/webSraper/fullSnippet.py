@@ -21,7 +21,8 @@ def run(snippet, link):
 	snippet = snippet.replace("... ", "\n")
 	
 	snippetLines = re.split('\n', snippet)
-	
+	#print "snippet Lines " + snippetLines
+ 
 	filename = 'output/scrapedData.txt'
 	print "Accesing website for data..."
 	if ".pdf" in link:
