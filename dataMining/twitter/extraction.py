@@ -41,12 +41,18 @@ def stanfordContext(tweet):
     return set(nerList)
        
 def stopWords(tweet):
-    englishStops = stopwords.words('english')
+    #englishStops = stopwords.words('english')
+    #customStops = stopwords.words(TWITTER_CUSTOM_STOPWORDS)
+    #combinedStops = set(englishStops).union(set(customStops))
+    #capitaldStops = [word.title() for word in combinedStops]
+    #combinedStops = set(capitaldStops).union(set(combinedStops))
+    #return combinedStops
+
     customStops = stopwords.words(TWITTER_CUSTOM_STOPWORDS)
-    combinedStops = set(englishStops).union(set(customStops))
-    capitaldStops = [word.title() for word in combinedStops]
-    combinedStops = set(capitaldStops).union(set(combinedStops))
+    capitaldStops = [word.title() for word in customStops]
+    combinedStops = set(capitaldStops).union(set(customStops))
     return combinedStops
+
 
 def cleaner(tweet, stopWords):
     words = tweet.split()
@@ -59,7 +65,7 @@ def cleaner(tweet, stopWords):
 def regex_removal(tweet):
     text = tweet.text
     for expression in TWITTER_REGEX:
-        text = re.sub(expression, "", text)   
+        text = re.sub(expression, "", text).strip()   
     return text
  
 def phraseLeft(tweet):
@@ -104,17 +110,17 @@ def runner(tweet):
         pass
     else: 
 
-        text = tweet.text
-        
-        text = phraseLeft(tweet)
-        text = phraseRight(tweet)
-        text = regex_removal(tweet)
+        cleanTweet = tweet
+        cleanTweet.text = phraseLeft(cleanTweet)
+        cleanTweet.text = phraseRight(cleanTweet)
+        cleanTweet.text = regex_removal(cleanTweet)
+        text = cleanTweet.text
         
         # ner - organization, location, person
-        nerList = stanfordContext(tweet.text)       
+        nerList = stanfordContext(text)       
         text = cleaner(text, nerList)
         # stopwords
-        text = cleaner(text, stopWords(tweet.text))
+        text = cleaner(text, stopWords(text))
         # metadata
         text = cleaner(text, tweet.metaData())
 

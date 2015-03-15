@@ -45,11 +45,12 @@ def tester():
     for tweet, result in zip(tweetList, resultList):
        
         count1 = count1 +1
-        #print(tweet.text)
+        print(tweet)
         extract = extraction.runner(tweet)
         
         print(extract.strip())
-        print(result.strip())
+        print(result.strip() + '\n')
+
         
         if (extract.strip() == result.strip()):
             count2 = count2 +1
