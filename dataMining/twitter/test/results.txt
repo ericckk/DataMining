@@ -13,9 +13,9 @@ Operations Analyst
 Lead Engineer 
 Network Architect I
 Director of Information Technology
-Sales
+
 Information Technology Project Lead
-Sales
+
 Java Software Engineer Jr/Mid Level
 Java Software Engineer Jr/Mid Level
 Branch Manager IT Consulting & Staff Augmentation
@@ -29,7 +29,7 @@ Audit Manager Information Technology
 Information Technology Instructors
 Consultant information technology IT
 Software/Programming Engineer
-Sales
+
 Developer AWS Sales Operations
 Senior RFID Systems Engineer
 Managed IT Services Sales Representative
@@ -39,7 +39,7 @@ Splunk Architect
 Senior PHP Developer
 HP Testing Tools Administrator
 Senior RFID Systems Engineer
-Sales
-Sales
-Sales
+
+
+
 Consultant information technology

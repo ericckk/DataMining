@@ -16,12 +16,11 @@ TWITTER_STREAM_FILE = path.dirname(__file__)  + '/data/twitter_stream_output.p'
 TWITTER_CLEAN_DATA = path.dirname(__file__)  + '/data/twitter_clean_data.txt'
 
 TWITTER_CUSTOM_STOPWORDS = path.dirname(__file__)  + '/data/custom_stopwords.txt'
-TWITTER_CUSTOM_PHRASES_LEFT = [' is hiring a ', ' is hiring ', ' is looking for a ', ' is looking for ', ' are hiring a ', ' are hiring ', ' opportunity with ',]
-TWITTER_CUSTOM_PHRASES_RIGHT = [' needed in ', ' needed ', ' at ', ' with ', ' for ', ' opening at ']
+TWITTER_CUSTOM_PHRASES_LEFT = [' for ', ' is hiring a ', ' is hiring ', ' is looking for a ', ' is looking for ', ' are hiring a ', ' are hiring ', ' opportunity with ',]
+TWITTER_CUSTOM_PHRASES_RIGHT = [' needed in ', ' needed ', ' at ', ' with ', ' opening at ']
 
 STANFORD_NER = '/usr/share/stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz'
 STANFORD_NER_JAR = '/usr/share/stanford-ner/stanford-ner.jar'
-
 
 TWITTER_PUNCTUATION = r"(\w*\?|\w*!|-|;|:|\.|,|\|)"
 TWITTER_HASHTAGS = r"#\w*"
@@ -33,7 +32,8 @@ TWITTER_BRACKETS = r"(\(|\)|\[|\])"
 TWITTER_SQUARE_BRACKETS_TEXT = r"\[(.+?)\]"
 TWITTER_DASH_SLASH = r"(-|\/|\\)"
 TWITTER_CUTOFF = r"\w*\.{3}"
-TWITTER_US_STATES = r"((\w* View|\w* City)*\w*, A[LKSZRAEP]|(\w* View|\w* City)*\w*, C[AOT]|(\w* View|\w* City)*\w*, D[EC]|(\w* View|\w* City)*\w*, F[LM]|(\w* View|\w* City)*\w*, G[AU]|(\w* View|\w* City)*\w*, HI|(\w* View|\w* City)*\w*, I[ADLN]|(\w* View|\w* City)*\w*, K[SY]|(\w* View|\w* City)*\w*, LA|M[ADEHINOPST]|(\w* View|\w* City)*\w*, N[CDEHJMVY]|(\w* View|\w* City)*\w*, O[HKR]|(\w* View|\w* City)*\w*, P[ARW]|(\w* View|\w* City)*\w*, RI|(\w* View|\w* City)*\w*, S[CD]|(\w* View|\w* City)*\w*, T[NX]|(\w* View|\w* City)*\w*, UT|(\w* View|\w* City)*\w*, V[AIT]|(\w* View|\w* City)*\w*, W[AIVY])"
+TWITTER_US_STATES = r"(\w*, A[LKSZRAEP]|\w*, C[AOT]|\w*, D[EC]|\w*, F[LM]|\w*, G[AU]|\w*, HI|\w*, I[ADLN]|\w*, K[SY]|\w*, LA|M[ADEHINOPST]|\w*, N[CDEHJMVY]|\w*, O[HKR]|\w*, P[ARW]|\w*, RI|\w*, S[CD]|\w*, T[NX]|\w*, UT|\w*, V[AIT]|\w*, W[AIVY])"
+TWITTER_US_STATES_2_WORD = r"(\w*\s\w*, A[LKSZRAEP]|\w*\s\w*, C[AOT]|\w*\s\w*, D[EC]|\w*\s\w*, F[LM]|\w*\s\w*, G[AU]|\w*\s\w*, HI|\w*\s\w*, I[ADLN]|\w*\s\w*, K[SY]|\w*\s\w*, LA|M[ADEHINOPST]|\w*\s\w*, N[CDEHJMVY]|\w*\s\w*, O[HKR]|\w*\s\w*, P[ARW]|\w*\s\w*, RI|\w*\s\w*, S[CD]|\w*\s\w*, T[NX]|\w*\s\w*, UT|\w*\s\w*, V[AIT]|\w*\s\w*, W[AIVY])"
 TWITTER_LOCATIONS = r"(Ala(bama|ska)|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|District of Columbia|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Miss(issippi|ouri)|Montana|Nebraska|Nevada|New (Hampshire|Jersey|Mexico|York)|North (Carolina|Dakota)|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode Island|South (Carolina|Dakota)|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West Virginia|Wisconsin|Wyoming|A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])"
 
 TWITTER_REGEX = [TWITTER_MONEY, TWITTER_HYPERLINKS, TWITTER_HASHTAGS, TWITTER_USERNAME, TWITTER_BRACKETS, TWITTER_SQUARE_BRACKETS_TEXT, TWITTER_US_STATES, TWITTER_CUTOFF, TWITTER_PUNCTUATION, TWITTER_ZIPCODE, ]

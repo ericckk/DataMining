@@ -8,7 +8,7 @@ __email__ = "justinmilanovic@gmail.com"
 __status__ = "Development"
 
 
-import pickle
+import pickle, nltk
 from dataMining.twitter import extraction
 
 pickledTweets = 'twitter_cursor_output.p'
@@ -41,22 +41,31 @@ def tester():
 
     count1 = 0
     count2 = 0
-
+    precision = 0
+    
     for tweet, result in zip(tweetList, resultList):
        
         count1 = count1 +1
         print(tweet)
         extract = extraction.runner(tweet)
         
-        print(extract.strip())
-        print(result.strip() + '\n')
+        extractTokens = nltk.word_tokenize(extract)
+        resultTokens = nltk.word_tokenize(result)
+        
+        precisionList = [word for word in resultTokens if word in extractTokens]
+        if len(precisionList) == len(resultTokens):
+            precision = precision + 1
+        
+        print('Exrt: ' + extract)
+        print('Cort: ' + result)
 
         
         if (extract.strip() == result.strip()):
             count2 = count2 +1
-
-    print(str(count2) +' out of' + str(count1))
-
+            
+    print('Precision: ' + str(precision) + ' out of ' + str(count1) + ' or ' + str(float("{0:.2f}".format(precision/float(count1)))) + '% of retrieved instances are relevant (positive predictive value)')
+    print('Recall: ' + str(count2) +' out of ' + str(precision) + ' or ' + str(float("{0:.2f}".format(count2/float(precision)))) + '% of the relevant instances are retrieved (sensitivity)')
+    
 if __name__ == '__main__':
     tester()
 

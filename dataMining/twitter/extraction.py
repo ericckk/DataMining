@@ -8,7 +8,7 @@ __status__ = "Development"
 #------------------------------------------------------------------------------
 
 from dataMining.settings import STANFORD_NER, STANFORD_NER_JAR, TWITTER_REGEX, TWITTER_CUSTOM_STOPWORDS, TWITTER_CUSTOM_PHRASES_LEFT, TWITTER_CUSTOM_PHRASES_RIGHT,\
-    TWITTER_LOCATIONS
+    TWITTER_US_STATES_2_WORD
 from dataMining.twitter.tweet import Tweet
 
 import re
@@ -22,7 +22,7 @@ from nltk.tag.stanford import NERTagger
 from nltk.corpus.reader import TaggedCorpusReader
 
 #------------------------------------------------------------------------------
-    
+# NER    
     
 def stanford(tweet):
     st = NERTagger(STANFORD_NER, STANFORD_NER_JAR) 
@@ -41,18 +41,22 @@ def stanfordContext(tweet):
     return set(nerList)
        
 def stopWords(tweet):
+    #NLTK stop words - decommissioned
     #englishStops = stopwords.words('english')
-    #customStops = stopwords.words(TWITTER_CUSTOM_STOPWORDS)
-    #combinedStops = set(englishStops).union(set(customStops))
-    #capitaldStops = [word.title() for word in combinedStops]
-    #combinedStops = set(capitaldStops).union(set(combinedStops))
-    #return combinedStops
 
     customStops = stopwords.words(TWITTER_CUSTOM_STOPWORDS)
     capitaldStops = [word.title() for word in customStops]
     combinedStops = set(capitaldStops).union(set(customStops))
     return combinedStops
 
+def cityStateExtraction(tweet):
+    regularExpression = re.compile(TWITTER_US_STATES_2_WORD)
+    cityStateTuple = regularExpression.search(tweet.text)
+    nerList = []
+    if cityStateTuple is not None:
+        cityStateTuple = cityStateTuple.groups()
+        nerList = (stanfordContext("It's a nice day in " + cityStateTuple[0]))
+    return nerList
 
 def cleaner(tweet, stopWords):
     words = tweet.split()
@@ -62,7 +66,10 @@ def cleaner(tweet, stopWords):
 
 #------------------------------------------------------------------------------
 
-def regex_removal(tweet):
+def regexEncoding(tweet):
+    return re.sub(r'&amp', "&", tweet).strip()
+
+def regexRemoval(tweet):
     text = tweet.text
     for expression in TWITTER_REGEX:
         text = re.sub(expression, "", text).strip()   
@@ -84,18 +91,20 @@ def phraseRight(tweet):
         if index != -1:
             text = (text[:index])
     return text
-    
+
+# decommissioned    
 def tags(tweet): 
     tweetTags = TextBlob(tweet).tags
     nounList = [pos[0] for pos in tweetTags if pos[1][0] == 'N']
     return ' '.join(nounList) 
 
+# decommissioned
 def nltkTags(tweet):
     text = nltk.word_tokenize(tweet)
     tags = nltk.pos_tag(text)
     return [pos[1] for pos in tags]
 
-# doesnt work - causes changes correctly spelled words    
+# decommissioned - causes changes to correctly spelled words    
 def spellcheck(tweet):
     return TextBlob(tweet).correct()
 
@@ -103,31 +112,28 @@ def spellcheck(tweet):
 #------------------------------------------------------------------------------
 # runner
 
-
-
 def runner(tweet):   
     if type(tweet) != Tweet:
         pass
     else: 
-
         cleanTweet = tweet
+        locationList = cityStateExtraction(cleanTweet)
+        nerList = stanfordContext(cleanTweet.text) 
+        cleanTweet.text = regexRemoval(cleanTweet)
         cleanTweet.text = phraseLeft(cleanTweet)
-        cleanTweet.text = phraseRight(cleanTweet)
-        cleanTweet.text = regex_removal(cleanTweet)
-        text = cleanTweet.text
+        cleanTweet.text = phraseRight(cleanTweet)        
+        text = cleaner(cleanTweet.text, locationList)
         
         # ner - organization, location, person
-        nerList = stanfordContext(text)       
+        #nerList = stanfordContext(text)       
         text = cleaner(text, nerList)
         # stopwords
         text = cleaner(text, stopWords(text))
         # metadata
         text = cleaner(text, tweet.metaData())
-
+        text = regexEncoding(text)
         return text.strip()
 
     
 if __name__ == "__main__":
-    print('intitializing...')
-    t = Tweet(text="RT @jobz4it: #jobs4u #jobs Information Technology (IT) Solutions Analyst, Washington, DC http://t.co/z0OVXm1xFC #infotech")
-    print(runner(t))
+    pass
