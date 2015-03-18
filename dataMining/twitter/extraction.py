@@ -69,9 +69,9 @@ def cleaner(tweet, stopWords):
 def regexEncoding(tweet):
     return re.sub(r'&amp', "&", tweet).strip()
 
-def regexRemoval(tweet):
+def regexRemoval(tweet, regexList):
     text = tweet.text
-    for expression in TWITTER_REGEX:
+    for expression in regexList:
         text = re.sub(expression, "", text).strip()   
     return text
  
@@ -119,7 +119,7 @@ def runner(tweet):
         cleanTweet = tweet
         locationList = cityStateExtraction(cleanTweet)
         nerList = stanfordContext(cleanTweet.text) 
-        cleanTweet.text = regexRemoval(cleanTweet)
+        cleanTweet.text = regexRemoval(cleanTweet, TWITTER_REGEX)
         cleanTweet.text = phraseLeft(cleanTweet)
         cleanTweet.text = phraseRight(cleanTweet)        
         text = cleaner(cleanTweet.text, locationList)
