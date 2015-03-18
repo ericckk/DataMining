@@ -22,7 +22,7 @@ def getSnippets(response, output, links):
                     elif itemKey == "link":
                         links.write("Link: ")
                         links.write(itemValue[itemKey])
-                        links.write("\n\n")
+                        links.write("\n")
     print("Amount of responses " + str(counter))
     
 ''' END OF getSnippets() FUNCTION '''

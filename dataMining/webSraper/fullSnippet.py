@@ -1,6 +1,11 @@
-#@author - Eric Kingori
-#this program will extract a full snippet from link given the snippet and link
-
+'''
+@author - Eric Kingori
+@Discription - this program will extract a full snippet from the link given the original snippet and link
+@limitations - This program cannot extract snippets from pdfs, word documents, powerpointslides and etc
+@limitations - If the snippet contains majority or all of the information it will return the original snippet
+@output - If succesful it will return the entire sentence or lines where the original snippet was found, if
+unsuccesful it returns the original snippet
+'''
 from __future__ import division
 import os
 import tagScraper
@@ -13,20 +18,26 @@ from nltk import word_tokenize
 #This method parses the snippet and opens the text from the link and returns the raw data
 
 def run(snippet, link):
+	#parsing Snippet to multiple lines
 	print "Parsing snippet.."
 	snippet = snippet.replace('\\n', '\n')
-	#snippet = unicode(snippet, errors = 'ignore')
+	snippet = snippet.replace('\\xb7 ', '\n')
 	p=re.compile('(u\'| u")')
 	snippet = p.sub("", snippet)	
 	snippet = snippet.replace("... ", "\n")
 	
 	snippetLines = re.split('\n', snippet)
-	#print "snippet Lines " + snippetLines
- 
+
 	filename = 'output/scrapedData.txt'
+	#for debug and deveolopment
+	#print "snippet Lines " 
+	#print snippetLines
+ 
+	#opening the link and getting raw data
 	print "Accesing website for data..."
-	if ".pdf" in link:
-		print "Cannot extract from PDFs"
+	docs = [".pdf", ".docx", ".doc"]
+	if link in docs :
+		print "Cannot extract from structured documents such a PDFs, DOCx, DOC"
 	else:
 		read= tagScraper.remote(link, filename, False )
 	try:
@@ -34,37 +45,34 @@ def run(snippet, link):
 	except Exception, e:
 		print ("unable to extract data from website")
 		return snippet
-		
-	'''
-	tagScraper.remote(link, filename, True )
-	f = open (filename)
-	read = f.read().decode('utf8')
 	
-												
-	f.close()
-	'''
 	return getSentences(read, snippetLines, snippet)
 
 
-#this method takes in the raw data and for every sentence it conpares it with the snippets to if snippets is contained it returns teh full sentence 
+#this method takes in the raw data and for every sentence the method compares it with the snippets, if the snippet is contained it returns the full sentence if not it switches to a word by word comparisons 
 def getSentences(read,snippetLines, snippet):
 	try:    
+		#getting the sentences		
 		print "Looking for full snippet within sentences of the data returned.."
                	found = False;
                 sent_detector= nltk.data.load('tokenizers/punkt/english.pickle')
-		
                 sentences = sent_detector.tokenize(read.strip())
+		#comparing every sentence to snippet
 		for sentence in sentences:
+				#print sentence
 				for line in snippetLines:
 					if (len(line)>3):
 						if line in sentence:
 							found= True
-							return sentence  
+							return sentence
+		#if not found switching to word by word comparisons  
 		if(found == False):
 			print "Unable to detect snippet using sentences switching to word comparisons.."
 			i=0
 			read = re.split("\n", read)
 			for line in read:
+				#print "------------"
+				#print line
 				words = re.split(" ", line)
 				words_Snippet = re.split(" ", snippetLines[i])
 				j=0				
@@ -75,7 +83,7 @@ def getSentences(read,snippetLines, snippet):
 					found = True
 					return line
 		if (found == False):
-			# going to add more algorithms to deal with different types of sites and noise to reduce the failure percentage			
+			# This area can be used to improve the algorithm if need be			
 			return snippet			
 											
 				 
@@ -85,10 +93,10 @@ def getSentences(read,snippetLines, snippet):
 
 
 
-#if running from another class comment out snippet = and link =
+
 snippet = u'Find IT - Software jobs such as software engineer/programmer, functional \nconsultant/business analyst, system analyst and others in Singapore. View all IT\n\xa0...'
 link = "http://job-search.jobstreet.com.sg/singapore/browse/computer-software-it-jobs/"
-
+#if running locally uncomment the line below
 #run (snippet, link)
 
 

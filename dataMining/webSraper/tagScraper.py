@@ -1,7 +1,9 @@
 '''
 @author - Eric Kingori
 @description  - this scraper is extract all text from most websites
-@limitations - cannot extract from PDF files 
+@limitations - cannot extract from Document files such PDFs, word or powerpoints files
+@output -  depending usage can either write scraped data to a file or return it as 
+a variable to calling module 
 '''
 
 import sys
@@ -90,16 +92,4 @@ def remote (url, filename, write):
 		read = '\n'.join(dataset)
 		return read
 
-'''
-#This function extracts data from an object and save it to the output file
-def extractText(soup):
-	f = open('../../output/scrapedData.txt', 'w')
-	tagList = ['li', 'strong', 'p', 'body', 'em', 'i', 'label', 'title', 'u' ]
-	for tag in tagList:	
-		info =soup.findAll(tag)
-		for paragraph in info:
-			f.write((paragraph.text).encode('utf-8'))
-	
-	f.close()
-	print("Done")\
-'''
+
