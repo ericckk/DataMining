@@ -27,7 +27,8 @@ def run(snippet, link):
 	snippet = snippet.replace("... ", "\n")
 	
 	snippetLines = re.split('\n', snippet)
-	
+
+	filename = 'output/scrapedData.txt'
 	#for debug and deveolopment
 	#print "snippet Lines " 
 	#print snippetLines
@@ -38,7 +39,7 @@ def run(snippet, link):
 	if link in docs :
 		print "Cannot extract from structured documents such a PDFs, DOCx, DOC"
 	else:
-		read= tagScraper.remote(link, 'filename', False )
+		read= tagScraper.remote(link, filename, False )
 	try:
 		read = read.decode('utf8')
 	except Exception, e:
