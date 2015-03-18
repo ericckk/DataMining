@@ -13,9 +13,10 @@ f.close()
 f = open(snippetFile)
 snippets = f.readlines()
 f.close()
+
 '''
  #for development used to iscolate links 
-j=10
+j=13
 print "opening this link "+ (links[j])[6:]
 print "Searching for this snippet:- "+ (snippets[j])[6:]		
 snippet_full=fullSnippet.run((snippets [j])[9:], (links[j])[6:])
@@ -23,7 +24,7 @@ snippet_full=fullSnippet.run((snippets [j])[9:], (links[j])[6:])
 def test():
 	i = 0
 	fail = 0
-	while (i<20):
+	while (i<len(links)-1):
 		print "----------------------------------------"
 		print "link id = "+str(i)
 		print "Opening this link "+ (links[i])[6:]
@@ -42,5 +43,4 @@ def test():
 	print "The percentage of failed attempts = "+ "{:.0%}".format(ratio)
 	print "The percentage of successful attempts = "+ "{:.0%}".format(float(1 - ratio))
 test()
-
 
