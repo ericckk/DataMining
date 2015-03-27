@@ -81,12 +81,20 @@ if not doSkills:
                    
 if doSkills:
     
-    outputName = "SoftwareEngineer"
-    output = open(("output/" + outputName + ".txt"), 'w+')
+    jobTitle = "software engineer"
+    
+    #TODO generate from jobTitle
+    queryTitle = "software engineering"
+    
+    outputName = jobTitle.replace(" ", "")
+    output = open(("output/" + outputName + "Skills.txt"), 'w+')
     links = open(("output/" + outputName + "links.txt"), 'w+')
     
     for fm in form:
-        query = " "
+        if fm == "like":
+            continue
+        
+        query = "\"" + queryTitle + " skills " + fm + "\"" 
         
         print "Query is: " + query
         

@@ -11,8 +11,9 @@ import pprint
 import nltk
 import re
 from apiclient.discovery import build
+from nltk.corpus import stopwords
 
-def processText(file, jobQuery):
+def processText(file, jobTitles):
     f = open(file, 'r')
     text = f.read()
     
@@ -50,7 +51,14 @@ def processText(file, jobQuery):
     #grammar = "and: {(<NN|NNS|JJ|VB|IN|VBG>+<,>)+<NN|NNS|JJ|VB|IN|VBG>*<CC><NN|NNS|JJ|VB|IN|VBG>+}"
     cp = nltk.RegexpParser(grammar)
     
+    stop = stopwords.words('english')
+    additionalStopwords = ["list", "others", "benefits", "after", "uses", "use",
+                           "jobs", "professionals", "occupations", "including",
+                           "like", "such", "as", "interview"]
+    
     for sentence in tokens:
+        
+        multiName = []
         #break
         result = cp.parse(sentence)
         
@@ -73,11 +81,13 @@ def processText(file, jobQuery):
                             name.append("")
                             continue
                         else:
-                            if element[0] == "jobs" or element[0] == "professionals" or element[0] == "occupations"or element[0] == "as"or element[0] == "including"or element[0] == "like":
+                            if element[0].strip() in stop or element[0].strip() in additionalStopwords:
+                                name[counter] = ""
+                            elif element[1] == "IN" or element[1] == "NNP" or element[1] == "TO":
                                 name[counter] = ""
                             else:
-                                name[counter] = name[counter] + element[0] + " " + "(" + element[1] + ")" + " "
-                              
+                                #name[counter] = name[counter] + element[0] + " " + "(" + element[1] + ")" + " "
+                                name[counter] = name[counter] + element[0] + " "
                 
                 elif node.label() == 'and':
                     for element in node:
@@ -86,10 +96,13 @@ def processText(file, jobQuery):
                             name.append("")
                             continue
                         else:
-                            if element[0] == "jobs" or element[0] == "professionals" or element[0] == "occupations"or element[0] == "as"or element[0] == "including"or element[0] == "like":
+                            if element[0].strip() in stop or element[0].strip() in additionalStopwords:
+                                name[counter] = ""
+                            elif element[1] == "IN" or element[1] == "NNP" or element[1] == "TO":
                                 name[counter] = ""
                             else:
-                                name[counter] = name[counter] + element[0] + " " + "(" + element[1] + ")" + " "
+                                #name[counter] = name[counter] + element[0] + " " + "(" + element[1] + ")" + " "
+                                name[counter] = name[counter] + element[0] + " "
                     
                                 
             if len(name) == 1:
@@ -98,7 +111,22 @@ def processText(file, jobQuery):
             if len(name) == 2:
                 if name[0] == "" and name[1] == "":
                     continue
-            print name
+            
+            if "/" in name:
+                multiName = name.split("/")
+                print "found a multi name"
+                
+            if len(multiName) > 0:
+                for additionalName in multiName:
+                    print additionalName
+            else:
+                for singleName in name:
+                    if singleName != "" and singleName != " ":
+                        if not singleName.strip() in jobTitles:
+                            jobTitles.append(singleName.strip())
+                    
+                #print name
+                
             
 ''' END OF processText() FUNCTION '''
 
@@ -107,7 +135,14 @@ def processText(file, jobQuery):
 
 query = " "
 
-processText("output/outputNew.txt", query)
+jobTitles = ["software engineer"]
+
+processText("output/outputNew.txt", jobTitles)
+
+pp = pprint.PrettyPrinter(indent=4)
+pp.pprint(jobTitles)
+#print jobTitles
+print len(jobTitles)
 
 #print(jobs)
 
