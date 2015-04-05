@@ -94,6 +94,7 @@ class Tweet(object):
         metaData = []
         metaData = self._processMetaData(metaData, self._name)
         metaData = self._processMetaData(metaData, self._screenName)
+        #depricated from algorithm
         #metaData = self._processMetaData(metaData, self._description)
         metaData = self._processMetaData(metaData, self._hashtags)
         metaData = self._processMetaData(metaData, self._location)

@@ -53,16 +53,5 @@ class Stream(object):
         stream = stream.filter(track=[self._query]) 
         return stream   
 
-if __name__ == '__main__':
-
-    textfile = 'test.txt'
-    query = "#jobs"
-    listener = StdOutListener(textfile)
-    
-    print "initializing query: ..."
-    print (textfile)
-    print(query)
-    twitterHandle = Stream(listener, query)
-    
     
     

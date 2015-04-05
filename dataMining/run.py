@@ -34,8 +34,6 @@ def twitterStream(query):
     listener = StdOutListener(open(TWITTER_STREAM_FILE, 'w'))
     Stream(listener, query)
     
-
-
 def pickleLoader(pklFile):
     try:
         while True:
@@ -47,13 +45,22 @@ def twitterCursorClean(test):
 
     with open(TWITTER_CURSOR_FILE, 'r') as f:
         for tweet in pickleLoader(f):
+            print(tweet)
+            cleanText = runner(tweet)
+            print("ANSW: " + cleanText)
+            print('-------------------')
+    file.close()
+
+def twitterStreamClean(test):
+
+    with open(TWITTER_STREAM_FILE, 'r') as f:
+        for tweet in pickleLoader(f):
             cleanText = runner(tweet)
 
             print(tweet)
             print(cleanText)
             print('-------------------')
-    file.close()
-    
+    file.close()    
     
 available_actions = {"cursor": twitterCursor, "stream": twitterStream, "cursorclean": twitterCursorClean,}
 

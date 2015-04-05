@@ -1,17 +1,12 @@
 __author__ = "Justin Milanovic"
-__copyright__ = "Copyright 2015, HireGround"
 __version__ = "1.0.0"
 __email__ = "justinmilanovic@gmail.com"
 __status__ = "Development"
 
 
-
 import tweepy, pickle, os
-from dataMining.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CURSOR_FILE
+from dataMining.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
 from dataMining.twitter.tweet import Tweet
-
-
-
 
 class Cursor(object):
     def __init__(self, filehandle):
@@ -48,9 +43,4 @@ class Cursor(object):
         except tweepy.TweepError:
             print('rate limit exceeded')
             os.sys.exit(0)
-            
-if __name__ == "__main__":
-    
-    c = Cursor(open(TWITTER_CURSOR_FILE, 'w'))
-    c.page('#jobs information technology')
-    
+

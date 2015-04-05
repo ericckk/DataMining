@@ -1,5 +1,4 @@
 __author__ = "Justin Milanovic"
-__copyright__ = "Copyright 2015, HireGround"
 __version__ = "1.0.0"
 __email__ = "justinmilanovic@gmail.com"
 __status__ = "Development"
@@ -133,7 +132,3 @@ def runner(tweet):
         text = cleaner(text, tweet.metaData())
         text = regexEncoding(text)
         return text.strip()
-
-    
-if __name__ == "__main__":
-    pass
