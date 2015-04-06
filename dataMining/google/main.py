@@ -1,14 +1,20 @@
 '''
-Created on Oct 23, 2014
+Created on Jan 20, 2015
 
-@author: Cory
 @author: Matt
 '''
 
 import pprint
 import nltk
+from dataMining.mongo.Job import Job
 from nltk.corpus import stopwords
+#import grammar, additionalStopwords for titles, stopwords for skills
 
+'''
+file - file that includes the snippets
+domain - domain to find job titles for
+jobTitles - list to populate job titles with
+'''
 def processTitles(file, domain, jobTitles):
     f = open(file, 'r')
     text = f.read()
@@ -135,7 +141,12 @@ def processTitles(file, domain, jobTitles):
                             jobTitles.append(jt.strip())         
 ''' END OF processTitles() FUNCTION '''
 
-
+'''
+file - file to get information from
+domain - the domain the job title is in
+jobSkills - the list to populate job skills with
+querys - list of the queries used in finding the snippets
+'''
 def processSkills(file, domain, jobSkills, querys):
     f = open(file, 'r')
     text = f.read()
@@ -262,20 +273,42 @@ def processSkills(file, domain, jobSkills, querys):
 
 #nltk.download('all')
 
-def run(doSkills):
-    querySkills = ["skills such as", "skills including"]
-    jobTitles = ["software engineer"]
-    jobSkills = [""]
+'''
+doSkills - boolean that tells the function to process job skills
+jobName - for skills this is job title that we are finding skills for
+        for job titles this is the initial job title used for the queries
+file - the file that includes the snippets to retrieve information from
+'''
+def run(doSkills, jobName, file):
+    if doSkills:
+        temp = Job()
+        jobSkills = [""]
+        querySkills = ["skills such as", "skills including"]
+        processSkills(file, "Information Technology", jobSkills, querySkills)
+        pp = pprint.PrettyPrinter(indent=4)
+        pp.pprint(jobSkills)
+        print len(jobSkills)
+        #add to database
+        j = temp.getjob("Information Technology", jobName)
+        j.skills = jobSkills
+        j.save()
+        
+    else:
+        jobTitles = [jobName]
+        processTitles(file, "Information Technology", jobTitles)
+        pp = pprint.PrettyPrinter(indent=4)
+        pp.pprint(jobTitles)
+        print len(jobTitles)
+        #add to database
+        for jt in jobTitles:
+            j = Job()
+            j.domain = "Information Technology"
+            j.title = jt
+            j.save()
     
-    #processTitles("output/outputNew.txt", "Information Technology", jobTitles)
-    processSkills("output/softwareengineerSkills.txt", "Information Technology", jobSkills, querySkills)
-    
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(jobSkills)
-    print len(jobSkills)
 
-
-run(False)
+#run(False, "software engineer", "output/outputNew.txt")
+#run(True, "software engineer", "output/softwareengineerSkills.txt")
 
         
         
