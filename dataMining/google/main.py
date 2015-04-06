@@ -5,148 +5,277 @@ Created on Oct 23, 2014
 @author: Matt
 '''
 
-import urllib2
-import urllib
 import pprint
 import nltk
-import re
-from apiclient.discovery import build
 from nltk.corpus import stopwords
 
-def processText(file, jobTitles):
+def processTitles(file, domain, jobTitles):
     f = open(file, 'r')
     text = f.read()
+    text = text.replace(("\\n"), "")
     
-    text = text.replace("\\n", "")
-    #text = text.replace("\\xa0", "")
-    #text = text.replace("\\u201c", "")
-    #text = text.replace("\\u201d", "")
-    #text = text.replace("u'", "")
-    
-    #text = re.sub("\\n$", "", text)
-    #text = re.sub("\\xa0$", "", text)
-    #text = re.sub("\\u201c$", "", text)
-    #text = re.sub("\\u201d$", "", text)
-    #text = re.sub("u'$", "", text)
-    
-    #print(text)
     tokens = nltk.sent_tokenize(text)
     tokens = [nltk.word_tokenize(sentence) for sentence in tokens]
     tokens = [nltk.pos_tag(word) for word in tokens]
-    #print tokens
-    #list: {(<NN|JJ|VB|IN|VBG>+<,>)+(<CC><NN|JJ|VB|IN|VBG>+)*}
-    '''grammar = """
-            comma: {<NN|JJ|VB|IN|VBG>+<,>}
-            endlist: {<CC>(<NN|JJ|VB|IN|VBG>+)}
-            list: {<comma>+(<endlist>)}
-            
-            
-            
-            """'''
+
     grammar = """
             list: {(<NN|NNS|NNP|VB|VBG|JJ|CC|PRP|IN|TO>+<,>)+}
             and: {<NN|NNS|JJ|VB|IN|VBG>*<CC><NN|NNS|JJ|VB|IN|VBG>+}
             """
-            
-    #grammar = "and: {(<NN|NNS|JJ|VB|IN|VBG>+<,>)+<NN|NNS|JJ|VB|IN|VBG>*<CC><NN|NNS|JJ|VB|IN|VBG>+}"
     cp = nltk.RegexpParser(grammar)
     
     stop = stopwords.words('english')
     additionalStopwords = ["list", "others", "benefits", "after", "uses", "use",
-                           "jobs", "professionals", "occupations", "including",
-                           "like", "such", "as", "interview"]
+                           "jobs", "job", "professionals", "professionals" "occupations", "including",
+                           "like", "such", "as", "interview", "various", "salary", "experience",
+                           "facts", "enjoy", "industry", "professions", "number", "high-paying"]
     
+    domain = domain.split(" ")
+    for word in domain:
+        additionalStopwords.append(word)
+    
+    #Using the grammar we find lists and find potential titles from them
     for sentence in tokens:
-        
+        #for text that has a "/" in it. Splits the word into two titles/skills
         multiName = []
-        #break
         result = cp.parse(sentence)
         
         for node in result:
-                    
-            name = list(" ")
+            #creates a 3 dimensional array. 1st Dimension is the found list forms
+            #2nd is individual titles within those lists, and the 3rd is the Part of Speech Tag
+            name = []
+            name.append([])
+            name[0].append([])
             counter = 0
+            wordCounter = 0;
             if type(node) is nltk.Tree:
+                #results from the list grammar
                 if node.label() == 'list':
-                    #print node
-                    #break
                     for element in node:
-                        #print element[0]
                         if element[1] == ",":
                             counter = counter + 1
-                            name.append("")
+                            name.append([])
+                            name[counter].append([])
+                            wordCounter = 0
                             continue
                         if element[1] == "CC":
                             counter = counter + 1
-                            name.append("")
+                            name.append([])
+                            name[counter].append([])
+                            wordCounter = 0
                             continue
                         else:
                             if element[0].strip() in stop or element[0].strip() in additionalStopwords:
-                                name[counter] = ""
+                                name[counter] = []
+                                name.append([])
+                                name[counter].append([])
+                                wordCounter = 0
+                                continue
+                                
                             elif element[1] == "IN" or element[1] == "NNP" or element[1] == "TO":
-                                name[counter] = ""
+                                name[counter][wordCounter] = ["", ""]
                             else:
-                                #name[counter] = name[counter] + element[0] + " " + "(" + element[1] + ")" + " "
-                                name[counter] = name[counter] + element[0] + " "
+                                name[counter][wordCounter] = [element[0], element[1]]
+                                name[counter].append([])
+                                wordCounter += 1
                 
+                #results from the and grammar
                 elif node.label() == 'and':
                     for element in node:
                         if element[1] == "CC":
                             counter = counter + 1
-                            name.append("")
+                            name.append([])
+                            name[counter].append([])
+                            wordCounter = 0
                             continue
                         else:
                             if element[0].strip() in stop or element[0].strip() in additionalStopwords:
-                                name[counter] = ""
+                                name[counter] = []
+                                name.append([])
+                                name[counter].append([])
+                                wordCounter = 0
+                                continue
                             elif element[1] == "IN" or element[1] == "NNP" or element[1] == "TO":
-                                name[counter] = ""
+                                name[counter][wordCounter] = ["", ""]
                             else:
-                                #name[counter] = name[counter] + element[0] + " " + "(" + element[1] + ")" + " "
-                                name[counter] = name[counter] + element[0] + " "
-                    
+                                name[counter][wordCounter] = [element[0], element[1]]
+                                name[counter].append([])
+                                wordCounter += 1
+            
+            #After finding potential job titles we do additional processing
+            #and add them to the return list                    
+            for n in name:
+                jt = ""
+                form = [" "]
+                for w in n:
+                    if  w:
+                        if (len(n) == 1 or len(n) == 2) and (w[1] == "JJ" or w[1] or "VB" or w[1] == "NNS"):
+                            continue
+                        if "/" in w[0]:
+                            multiName = w[0].split("/")
+                            jt += multiName[0] + " "
+                            if not jt.strip() in jobTitles:
+                                if w[1] == "VBG" or w[1] == "JJ":
+                                    form = [" "]
+                                else:
+                                    jobTitles.append(jt.strip())
+                                    form = [" "]
+                                    
+                            jt = multiName[1] + " "
+                            form.append(w[1])
+                        else:
+                            jt += w[0] + " "
+                            form.append(w[1])
+            
+                if jt != "" and jt != " ": 
+                    if not jt.strip() in jobTitles:
+                        if form[len(form)-1] == "NNS" or form[len(form)-1] == "VBG" or form[len(form)-1] == "JJ": 
+                            pass
+                        else:     
+                            jobTitles.append(jt.strip())         
+''' END OF processTitles() FUNCTION '''
+
+
+def processSkills(file, domain, jobSkills, querys):
+    f = open(file, 'r')
+    text = f.read()
+    text = text.replace(("\\n"), "")
+    
+    tokens = nltk.sent_tokenize(text)
+    tokens = [nltk.word_tokenize(sentence) for sentence in tokens]
+    tokens = [nltk.pos_tag(word) for word in tokens]
+
+    grammar = """
+            list: {(<NN|NNS|NNP|VB|VBG|JJ|CC|PRP|IN|TO>+<,>)+}
+            and: {<NN|NNS|JJ|VB|IN|VBG>*<CC><NN|NNS|JJ|VB|IN|VBG>+}
+            """
+    cp = nltk.RegexpParser(grammar)
+    
+    additionalStopwords = ["list", "others", "benefits", "after", "uses", "use",
+                           "jobs", "job", "professionals", "professionals" "occupations", "including",
+                           "like", "such", "as", "interview", "various", "salary", "experience",
+                           "facts", "enjoy", "industry", "professions", "number", "high-paying",
+                           "skill", "skills", "get", "help"]
+    
+    domain = domain.split(" ")
+    for word in domain:
+        additionalStopwords.append(word)
+    for query in querys:
+        for word in query.split(" "):
+            additionalStopwords.append(word) 
+    
+    #Using the grammar we find lists and find potential skill from them
+    for sentence in tokens:
+        #for text that has a "/" in it. Splits the word into two titles/skills
+        multiName = []
+        result = cp.parse(sentence)
+        
+        for node in result:
+            #creates a 3 dimensional array. 1st Dimension is the found list forms
+            #2nd is individual titles within those lists, and the 3rd is the Part of Speech Tag
+            name = []
+            name.append([])
+            name[0].append([])
+            counter = 0
+            wordCounter = 0;
+            if type(node) is nltk.Tree:
+                #results from the list grammar
+                if node.label() == 'list':
+                    for element in node:
+                        if element[1] == ",":
+                            counter = counter + 1
+                            name.append([])
+                            name[counter].append([])
+                            wordCounter = 0
+                            continue
+                        if element[1] == "CC":
+                            counter = counter + 1
+                            name.append([])
+                            name[counter].append([])
+                            wordCounter = 0
+                            continue
+                        else:
+                            if element[0].strip() in additionalStopwords:
+                                name[counter] = []
+                                name.append([])
+                                name[counter].append([])
+                                wordCounter = 0
+                                continue
                                 
-            if len(name) == 1:
-                if name[0] == " " or name[0] == "":
-                    continue
-            if len(name) == 2:
-                if name[0] == "" and name[1] == "":
-                    continue
-            
-            if "/" in name:
-                multiName = name.split("/")
-                print "found a multi name"
+                            elif element[1] == "IN" or element[1] == "TO":
+                                name[counter][wordCounter] = ["", ""]
+                            else:
+                                name[counter][wordCounter] = [element[0], element[1]]
+                                name[counter].append([])
+                                wordCounter += 1
                 
-            if len(multiName) > 0:
-                for additionalName in multiName:
-                    print additionalName
-            else:
-                for singleName in name:
-                    if singleName != "" and singleName != " ":
-                        if not singleName.strip() in jobTitles:
-                            jobTitles.append(singleName.strip())
-                    
-                #print name
-                
+                #results from the and grammar
+                elif node.label() == 'and':
+                    for element in node:
+                        if element[1] == "CC":
+                            counter = counter + 1
+                            name.append([])
+                            name[counter].append([])
+                            wordCounter = 0
+                            continue
+                        else:
+                            if element[0].strip() in additionalStopwords:
+                                name[counter] = []
+                                name.append([])
+                                name[counter].append([])
+                                wordCounter = 0
+                                continue
+                            elif element[1] == "IN" or element[1] == "TO":
+                                name[counter][wordCounter] = ["", ""]
+                            else:
+                                name[counter][wordCounter] = [element[0], element[1]]
+                                name[counter].append([])
+                                wordCounter += 1
             
-''' END OF processText() FUNCTION '''
+            #After finding potential job titles we do additional processing
+            #and add them to the return list                   
+            for n in name:
+                jt = ""
+                form = [" "]
+                for w in n:
+                    if  w:
+                        if (len(n) == 1 or len(n) == 2) and (w[1] == "JJ" or w[1] == "NNS"):
+                            continue
+                        if "/" in w[0]:
+                            multiName = w[0].split("/")
+                            jt += multiName[0] + " "
+                            if not jt.strip() in jobSkills:
+                                jobSkills.append(jt.strip())
+                                form = [" "]
+                                    
+                            jt = multiName[1] + " "
+                            form.append(w[1])
+                        else:
+                            jt += w[0] + " "
+                            form.append(w[1])
+            
+                if jt != "" and jt != " ": 
+                    if not jt.strip() in jobSkills:   
+                        jobSkills.append(jt.strip())       
+''' END OF processSkills() FUNCTION '''
+
 
 #nltk.download('all')
 
-
-query = " "
-
-jobTitles = ["software engineer"]
-
-processText("output/outputNew.txt", jobTitles)
-
-pp = pprint.PrettyPrinter(indent=4)
-pp.pprint(jobTitles)
-#print jobTitles
-print len(jobTitles)
-
-#print(jobs)
+def run(doSkills):
+    querySkills = ["skills such as", "skills including"]
+    jobTitles = ["software engineer"]
+    jobSkills = [""]
+    
+    #processTitles("output/outputNew.txt", "Information Technology", jobTitles)
+    processSkills("output/softwareengineerSkills.txt", "Information Technology", jobSkills, querySkills)
+    
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint(jobSkills)
+    print len(jobSkills)
 
 
+run(False)
 
         
         
