@@ -39,14 +39,13 @@ def getSnippets(response, output, links, getFullSnippet):
 		                try:
 					snippet_full=repr(snippet_full)
 					#parsing the snippet to try an remove as much niose initially as posible
-					snippet_full = snippet_full.replace('\\n', '')
-					snippet_full = snippet_full.replace('\'u', '')
-					snippet_full = snippet_full.replace('\\r ', '')
-					snippet_full = snippet_full.replace('\\t ', '')
-					snippet_full = snippet_full.replace('\r ', '')
-					snippet_full = snippet_full.replace('\t ', '')
+					
+					snippet_full=re.sub('\\+n', '', snippet_full)
+					snippet_full=re.sub('\\+t', '', snippet_full)
+					snippet_full=re.sub('\\+r', '', snippet_full)
 					regex = re.compile('[^a-zA-Z\s,]')
 					snippet_full=regex.sub('', snippet_full)
+					#snippet_full=re.sub('\_\_+', '_', snippet_full)
 					#writing new snippet
 					output.write(snippet_full)	
 				except UnicodeEncodeError:
@@ -80,7 +79,7 @@ output = open(("output/" + outputName + ".txt"), 'w+')
 links = open(("output/" + outputName + "links.txt"), 'w+')
 
 #this activates the full Snippet Capability
-getFullSnippet = False
+getFullSnippet = True
 if(getFullSnippet ==  True):
 	output = open(("output/" + outputName + "Full.txt"), 'w+')
 
