@@ -35,6 +35,9 @@ def test():
 		print "Searching for this snippet:- "+ (snippets[i])[6:]
 		
 		snippet_full=fullSnippet.run((snippets [i])[9:], (links[i])[6:])
+		docs = [".pdf", "docx", "doc"]
+		if link in docs :
+			fail = fail-1		
 		if (len(snippet_full)> len((snippets [i])[9:])):
 			print "Found the snippet "+ ((snippets [i])[9:]) + " within: "+snippet_full
 		else:

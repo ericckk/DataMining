@@ -82,7 +82,7 @@ def getSentences(read,snippetLines, snippet):
 					if word in words:
 						j+=1
 				
-				if (j>5):
+				if (j>5 and len(line)<len(snippet)*3):
 					found = True										
 					return line
 					
