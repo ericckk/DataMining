@@ -1,10 +1,15 @@
 import urllib2
 import urllib
 from apiclient.discovery import build
+from webScraper import fullSnippet
+import re
 
-def getSnippets(response, output, links):
+
+def getSnippets(response, output, links, getFullSnippet):
+
     #iterate through the keys in the query response (dictionary)
-    counter = 0
+    snippetCounter = 0
+    linkCounter = 0
     for key in response.keys():
         #items key holds the link information
         if key == "items":
@@ -14,16 +19,43 @@ def getSnippets(response, output, links):
                 for itemKey in itemValue.keys():
                     #print snippet
                     if itemKey == "snippet":
-                        output.write("Snippet: ")
-                        output.write(repr(itemValue[itemKey]))
-                        output.write("\n")
-                        counter = counter + 1
+			if(getFullSnippet == False):
+		                output.write("Snippet: ")
+		                output.write(repr(itemValue[itemKey]))
+		                output.write("\n")
+			else:
+				snippet = repr(itemValue[itemKey])
+                        snippetCounter += 1 #counter for snippets founds
                     #print if it is a link
                     elif itemKey == "link":
-                        links.write("Link: ")
-                        links.write(itemValue[itemKey])
-                        links.write("\n\n")
-    print("Amount of responses " + str(counter))
+			linkCounter +=1 #counter for links returned		        
+			links.write("Link: ")
+		        links.write(itemValue[itemKey])
+		        links.write("\n")
+			#if get fullSnippet is activated and the link counter mathches the Snippet counter
+			if(getFullSnippet == True and linkCounter == snippetCounter):
+				snippet_full = fullSnippet.run(snippet, itemValue[itemKey])
+				output.write("Snippet: ")
+		                try:
+					snippet_full=repr(snippet_full)
+					#parsing the snippet to try an remove as much niose initially as posible
+					snippet_full = snippet_full.replace('\\n', '')
+					snippet_full = snippet_full.replace('\'u', '')
+					snippet_full = snippet_full.replace('\\r ', '')
+					snippet_full = snippet_full.replace('\\t ', '')
+					snippet_full = snippet_full.replace('\r ', '')
+					snippet_full = snippet_full.replace('\t ', '')
+					regex = re.compile('[^a-zA-Z\s,]')
+					snippet_full=regex.sub('', snippet_full)
+					#writing new snippet
+					output.write(snippet_full)	
+				except UnicodeEncodeError:
+					#write oriinal Snippet upon error
+		                	output.write(repr(snippet))
+				output.write("\n")
+			
+				
+    print("Amount of responses " + str(snippetCounter))
     
 ''' END OF getSnippets() FUNCTION '''
     
@@ -46,6 +78,11 @@ blacklist2 = [("occupations", "including"), ("occupations", "like"), ("professio
 outputName = "outputNew"
 output = open(("output/" + outputName + ".txt"), 'w+')
 links = open(("output/" + outputName + "links.txt"), 'w+')
+
+#this activates the full Snippet Capability
+getFullSnippet = False
+if(getFullSnippet ==  True):
+	output = open(("output/" + outputName + "Full.txt"), 'w+')
 
 doSkills = False
     
@@ -76,7 +113,7 @@ if not doSkills:
         
             response = service.cse().list(q = query, cx = search_Engine_ID).execute()
                 
-            getSnippets(response, output, links)
+            getSnippets(response, output, links, getFullSnippet)
             #pprint.pprint(response, output)
                    
 if doSkills:
@@ -107,6 +144,6 @@ if doSkills:
         
         response = service.cse().list(q = query, cx = search_Engine_ID).execute()
                 
-        getSnippets(response, output, links)
+        getSnippets(response, output, links, getFullSnippet)
         #pprint.pprint(response, output)       
         
