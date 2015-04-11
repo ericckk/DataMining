@@ -17,7 +17,7 @@ from nltk import word_tokenize
 
 #This method parses the snippet and opens the text from the link and returns the raw data
 
-def run(snippet, link):
+def run(snippet, link, tolerance):
 	#parsing Snippet to multiple lines
 	print "Parsing snippet.."
 	snippet = snippet.replace('\\n', '\n')
@@ -82,7 +82,7 @@ def getSentences(read,snippetLines, snippet):
 					if word in words:
 						j+=1
 				
-				if (j>5 and len(line)<len(snippet)*3):
+				if (j>5 and len(line)<len(snippet)*tolerance):
 					found = True										
 					return line
 					
@@ -102,6 +102,6 @@ def getSentences(read,snippetLines, snippet):
 snippet = u'Find IT - Software jobs such as software engineer/programmer, functional \nconsultant/business analyst, system analyst and others in Singapore. View all IT\n\xa0...'
 link = "http://job-search.jobstreet.com.sg/singapore/browse/computer-software-it-jobs/"
 #if running locally uncomment the line below
-#run (snippet, link)
+#run (snippet, link, 2)
 
 
