@@ -34,21 +34,29 @@ def getSnippets(response, output, links, getFullSnippet):
 		        links.write("\n")
 			#if get fullSnippet is activated and the link counter mathches the Snippet counter
 			if(getFullSnippet == True and linkCounter == snippetCounter):
-				snippet_full = fullSnippet.run(snippet, itemValue[itemKey])
+				snippet_full = fullSnippet.run(snippet, itemValue[itemKey], 2)
 				output.write("Snippet: ")
 		                try:
-					snippet_full=repr(snippet_full)
+					
 					#parsing the snippet to try an remove as much niose initially as posible
 					
-					snippet_full=re.sub('\\+n', '', snippet_full)
-					snippet_full=re.sub('\\+t', '', snippet_full)
-					snippet_full=re.sub('\\+r', '', snippet_full)
+					'''
+					snippet_full=re.sub('\\t', '-', snippet_full)
+					snippet_full=re.sub('\\r', '-', snippet_full)			
+					snippet_full=re.sub('\\n', '-', snippet_full)		
 					regex = re.compile('[^a-zA-Z\s,]')
-					snippet_full=regex.sub('', snippet_full)
+					snippet_full=regex.sub(' ', snippet_full)
 					#snippet_full=re.sub('\_\_+', '_', snippet_full)
-					#writing new snippet
+					'''
+					snippetArray= snippet_full.split()
+					snippet_full = ' '.join(snippetArray)					
+					regex = re.compile('[^a-zA-Z\s,\']')
+					snippet_full=regex.sub('.', snippet_full)
+					snippet_full=re.sub('\.\.+', '.', snippet_full)
+					#writing new snippet					
+					snippet_full=repr(snippet_full)
 					output.write(snippet_full)	
-				except UnicodeEncodeError:
+				except (UnicodeEncodeError, AttributeError) as e:
 					#write oriinal Snippet upon error
 		                	output.write(repr(snippet))
 				output.write("\n")

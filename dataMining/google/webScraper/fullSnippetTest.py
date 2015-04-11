@@ -21,7 +21,7 @@ f.close()
 j=13
 print "opening this link "+ (links[j])[6:]
 print "Searching for this snippet:- "+ (snippets[j])[6:]		
-snippet_full=fullSnippet.run((snippets [j])[9:], (links[j])[6:])
+snippet_full=fullSnippet.run((snippets [j])[9:], (links[j])[6:], 3)
 '''
 def test():
 	i = 0
@@ -34,7 +34,7 @@ def test():
 		print "Opening this link "+ (links[i])[6:]
 		print "Searching for this snippet:- "+ (snippets[i])[6:]
 		
-		snippet_full=fullSnippet.run((snippets [i])[9:], (links[i])[6:])
+		snippet_full=fullSnippet.run((snippets [i])[9:], (links[i])[6:], 3)
 		docs = [".pdf", "docx", "doc"]
 		if link in docs :
 			fail = fail-1		
