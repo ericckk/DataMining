@@ -8,6 +8,8 @@ import pprint
 import nltk
 from dataMining.mongo.Job import Job
 from nltk.corpus import stopwords
+from nltk.corpus import stopwords, wordnet
+from nltk.stem import WordNetLemmatizer
 #import grammar, additionalStopwords for titles, stopwords for skills
 
 '''
