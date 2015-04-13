@@ -10,6 +10,7 @@ from dataMining.mongo.Job import Job
 from nltk.corpus import stopwords
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
+from dataMining.settings import GOOGLE_ADDITIONAL_PROCESSING, GOOGLE_MANUAL_PROCESSING
 #import grammar, additionalStopwords for titles, stopwords for skills
 
 '''
@@ -17,11 +18,12 @@ Performs manual text processing on the given word
 word - the word to perform the manual testing on
 '''
 def manualProcessing(word):
-    if word.endswith("ment"):
-        withoutSuffix = word[:-len('ment')]
-        if withoutSuffix.endswith('e'):
-            withoutSuffix = withoutSuffix[:-len('e')]
-        word = withoutSuffix + 'er'
+    if(GOOGLE_MANUAL_PROCESSING == 1):
+        if word.endswith("ment"):
+            withoutSuffix = word[:-len('ment')]
+            if withoutSuffix.endswith('e'):
+                withoutSuffix = withoutSuffix[:-len('e')]
+                word = withoutSuffix + 'er'
     return word
 
 '''
@@ -29,17 +31,17 @@ Performs additional processing on a given sentence token
 sentenceToken - a sentence created by nltk.sent_tokenize()
 '''
 def additionalProcessing(sentenceTokens):
-    
-    for i in xrange(0,len(sentenceTokens)):
-        for x in xrange(0,len(sentenceTokens[i])):
-            #Lemmatization
-            lmtzr = WordNetLemmatizer()
-            sentanceTokens[i][x] = lmtzr.lemmatize(sentenceTokens[i][x])
+    if(GOOGLE_ADDITIONAL_PROCESSING == 1):
+        for i in xrange(0,len(sentenceTokens)):
+            for x in xrange(0,len(sentenceTokens[i])):
+                #Lemmatization
+                lmtzr = WordNetLemmatizer()
+                sentanceTokens[i][x] = lmtzr.lemmatize(sentenceTokens[i][x])
             
-            #Manual Processing
-            sentenceTokens[i][x] = manualProcessing(sentenceTokens[i][x])
+                #Manual Processing
+                sentenceTokens[i][x] = manualProcessing(sentenceTokens[i][x])
             
-            #print sentenceTokens[i][x]
+                #print sentenceTokens[i][x]
     return sentenceTokens
     
 '''
