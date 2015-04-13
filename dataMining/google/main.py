@@ -11,6 +11,48 @@ from nltk.corpus import stopwords
 #import grammar, additionalStopwords for titles, stopwords for skills
 
 '''
+Performs manual text processing on the given word
+word - the word to perform the manual testing on
+'''
+def manualProcessing(word):
+    if word.endswith("ment"):
+        withoutSuffix = word[:-len('ment')]
+        if withoutSuffix.endswith('e'):
+            withoutSuffix = withoutSuffix[:-len('e')]
+        word = withoutSuffix + 'er'
+    return word
+
+'''
+Performs additional processing on a given sentence token
+sentenceToken - a sentence created by nltk.sent_tokenize()
+'''
+def additionalProcessing(sentenceTokens):
+    
+    for i in xrange(0,len(sentenceTokens)):
+        for x in xrange(0,len(sentenceTokens[i])):
+            #Lemmatization
+            lmtzr = WordNetLemmatizer()
+            sentanceTokens[i][x] = lmtzr.lemmatize(sentenceTokens[i][x])
+            
+            #Manual Processing
+            sentenceTokens[i][x] = manualProcessing(sentenceTokens[i][x])
+            
+            #print sentenceTokens[i][x]
+    return sentenceTokens
+    
+'''
+Performs text preprocessing so it can be worked with
+text - the text to be processed
+'''
+def preprocess(text):
+    tokens = nltk.sent_tokenize(text)
+    tokens = [nltk.word_tokenize(sentence) for sentence in tokens]
+    #Additional Processing
+    tokens = additionalProcessing(tokens)
+    tokens = [nltk.pos_tag(word) for word in tokens]
+    return tokens
+
+'''
 file - file that includes the snippets
 domain - domain to find job titles for
 jobTitles - list to populate job titles with
@@ -20,9 +62,7 @@ def processTitles(file, domain, jobTitles):
     text = f.read()
     text = text.replace(("\\n"), "")
     
-    tokens = nltk.sent_tokenize(text)
-    tokens = [nltk.word_tokenize(sentence) for sentence in tokens]
-    tokens = [nltk.pos_tag(word) for word in tokens]
+    tokens = preprocess(text)
 
     grammar = """
             list: {(<NN|NNS|NNP|VB|VBG|JJ|CC|PRP|IN|TO>+<,>)+}
