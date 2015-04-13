@@ -36,7 +36,7 @@ def additionalProcessing(sentenceTokens):
             for x in xrange(0,len(sentenceTokens[i])):
                 #Lemmatization
                 lmtzr = WordNetLemmatizer()
-                sentanceTokens[i][x] = lmtzr.lemmatize(sentenceTokens[i][x])
+                sentenceTokens[i][x] = lmtzr.lemmatize(sentenceTokens[i][x])
             
                 #Manual Processing
                 sentenceTokens[i][x] = manualProcessing(sentenceTokens[i][x])
