@@ -87,7 +87,7 @@ output = open(("output/" + outputName + ".txt"), 'w+')
 links = open(("output/" + outputName + "links.txt"), 'w+')
 
 #this activates the full Snippet Capability
-getFullSnippet = True
+getFullSnippet = False
 if(getFullSnippet ==  True):
 	output = open(("output/" + outputName + "Full.txt"), 'w+')
 

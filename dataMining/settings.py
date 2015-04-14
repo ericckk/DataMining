@@ -55,5 +55,23 @@ GOOGLE_SEARCH_ENGINE_ID = "016745198537660285174:espiwqmbexg"
 
 
 #Google: additional processing settings
-GOOGLE_ADDITIONAL_PROCESSING = 1
-GOOGLE_MANUAL_PROCESSING = 1
+GOOGLE_ADDITIONAL_PROCESSING = 0
+GOOGLE_MANUAL_PROCESSING = 0
+
+#Snippet Processing
+GRAMMAR = """
+            list: {(<NN|NNS|NNP|VB|VBG|JJ|CC|PRP|IN|TO>+<,>)+}
+            and: {<NN|NNS|JJ|VB|IN|VBG>*<CC><NN|NNS|JJ|VB|IN|VBG>+}
+            """
+ADDITIONAL_STOP_WORDS_TITLES = ["list", "others", "benefits", "after", "uses", "use",
+                           "jobs", "job", "professionals", "professionals" "occupations", "including",
+                           "like", "such", "as", "interview", "various", "salary", "experience",
+                           "facts", "enjoy", "industry", "professions", "number", "high-paying"]
+
+ADDITIONAL_STOP_WORDS_SKILLS = ["list", "others", "benefits", "after", "uses", "use",
+                           "jobs", "job", "professionals", "professionals" "occupations", "including",
+                           "like", "such", "as", "interview", "various", "salary", "experience",
+                           "facts", "enjoy", "industry", "professions", "number", "high-paying",
+                           "skill", "skills", "get", "help"]
+
+

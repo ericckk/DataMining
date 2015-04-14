@@ -10,8 +10,7 @@ from dataMining.mongo.Job import Job
 from nltk.corpus import stopwords
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
-from dataMining.settings import GOOGLE_ADDITIONAL_PROCESSING, GOOGLE_MANUAL_PROCESSING
-#import grammar, additionalStopwords for titles, stopwords for skills
+from dataMining.settings import GOOGLE_ADDITIONAL_PROCESSING, GOOGLE_MANUAL_PROCESSING, GRAMMAR, ADDITIONAL_STOP_WORDS_SKILLS, ADDITIONAL_STOP_WORDS_TITLES
 
 '''
 Performs manual text processing on the given word
@@ -68,17 +67,14 @@ def processTitles(file, domain, jobTitles):
     
     tokens = preprocess(text)
 
-    grammar = """
-            list: {(<NN|NNS|NNP|VB|VBG|JJ|CC|PRP|IN|TO>+<,>)+}
-            and: {<NN|NNS|JJ|VB|IN|VBG>*<CC><NN|NNS|JJ|VB|IN|VBG>+}
-            """
-    cp = nltk.RegexpParser(grammar)
+    #grammar = """
+    #        list: {(<NN|NNS|NNP|VB|VBG|JJ|CC|PRP|IN|TO>+<,>)+}
+    #        and: {<NN|NNS|JJ|VB|IN|VBG>*<CC><NN|NNS|JJ|VB|IN|VBG>+}
+    #        """
+    cp = nltk.RegexpParser(GRAMMAR)
     
     stop = stopwords.words('english')
-    additionalStopwords = ["list", "others", "benefits", "after", "uses", "use",
-                           "jobs", "job", "professionals", "professionals" "occupations", "including",
-                           "like", "such", "as", "interview", "various", "salary", "experience",
-                           "facts", "enjoy", "industry", "professions", "number", "high-paying"]
+    additionalStopwords = ADDITIONAL_STOP_WORDS_TITLES
     
     domain = domain.split(" ")
     for word in domain:
@@ -206,11 +202,7 @@ def processSkills(file, domain, jobSkills, querys):
             """
     cp = nltk.RegexpParser(grammar)
     
-    additionalStopwords = ["list", "others", "benefits", "after", "uses", "use",
-                           "jobs", "job", "professionals", "professionals" "occupations", "including",
-                           "like", "such", "as", "interview", "various", "salary", "experience",
-                           "facts", "enjoy", "industry", "professions", "number", "high-paying",
-                           "skill", "skills", "get", "help"]
+    additionalStopwords = ADDITIONAL_STOP_WORDS_SKILLS
     
     domain = domain.split(" ")
     for word in domain:

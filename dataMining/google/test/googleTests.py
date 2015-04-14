@@ -1,18 +1,43 @@
-from google.main import processTitles
+from dataMining.google.main import processTitles
 import pprint
 
 inputfile = "test.txt"
 
-expectedJobTitles = ["software engineer", "systems analyst", "programmer", "project management",
-                     "functional consultant", "business analyst", "computer scientist", 
-                     "system engineer", "design engineer", "computer consultant", "software architect",
-                     "customer service", "University lecturer", "defence research scientist",
-                     "telecommunications engineer", "mechanical engineer", "electrical engineer",
-                     "aerospace engineer", "civil engineer", "developer", "data scientist",
-                     "application developer", "cloud architect", "build lead", "systems analyst",
-                     "consultant", "chef", "social worker", "primary school teacher",
-                     "database development", "hardware engineer", "computer programmer", "doctor",
-                     "interaction designer", "physician", "teacher", "librarian"]
+expectedJobTitles = ["system analyst",
+"functional consultant",
+"business analyst",
+"programmer",
+"computer scientist",
+"support specialist",
+"network administrator",
+"computer systems administrator",
+"analyst",
+"interface designer",
+"web development",
+"database administrator",
+"database analyst",
+"system analyst",
+"computer consultant",
+"software architect",
+"customer service",
+"University lecturer",
+"defence research scientist",
+"telecommunications engineer",
+"mechanical engineer",
+"electrical engineer",
+"aerospace engineer",
+"civil engineer",
+"DevOps developer",
+"data scientist",
+"application developer",
+"cloud architect",
+"build lead",
+"hardware engineer",
+"Information Systems Manager",
+"social worker",
+"primary school teacher",
+"computer programmer",
+"interaction designer"]
 
 retrievedJobTitles = ["software engineer"]
 
