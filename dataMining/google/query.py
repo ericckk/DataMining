@@ -1,8 +1,8 @@
-import urllib2
-import urllib
 from apiclient.discovery import build
 from webScraper import fullSnippet
 import re
+from dataMining.settings import GOOGLE_API_KEYS
+from googleapiclient.errors import HttpError
 
 
 def getSnippets(response, output, links, getFullSnippet):
@@ -86,12 +86,16 @@ outputName = "outputNew"
 output = open(("output/" + outputName + ".txt"), 'w+')
 links = open(("output/" + outputName + "links.txt"), 'w+')
 
+currentAPIKey = 0;
+
 #this activates the full Snippet Capability
 getFullSnippet = False
 if(getFullSnippet ==  True):
 	output = open(("output/" + outputName + "Full.txt"), 'w+')
 
 doSkills = False
+
+service = build("customsearch", "v1", developerKey=GOOGLE_API_KEYS[currentAPIKey])
     
 if not doSkills:
     for js in jobSynonym:
@@ -111,15 +115,28 @@ if not doSkills:
                 
             print "Query is: " + query
         
-        
-            service = build("customsearch", "v1", developerKey=api_key)
-        
-            #file that will hold the output
-            #will create the file if it does not exist (w+)
-            counter = counter + 1
-        
-            response = service.cse().list(q = query, cx = search_Engine_ID).execute()
-                
+            try:
+                response = service.cse().list(q = query, cx = search_Engine_ID).execute()
+            except HttpError, HttpErrorArg:
+                argString = str(HttpErrorArg)
+                location = argString.find("returned \"Daily Limit Exceeded\"")
+            
+                if location != -1:
+                    print "Daily Limit of queries exceeded, switching API key"
+                    currentAPIKey += 1
+            
+                    if currentAPIKey >= len(GOOGLE_API_KEYS):
+                        print "No Usable API keys remaining"
+                        print "Exiting..."
+                        exit()
+                    else:
+                        service = build("customsearch", "v1", developerKey=GOOGLE_API_KEYS[currentAPIKey])
+
+                else:
+                    print HttpErrorArg
+                    print "Exiting..."
+                    exit()
+         
             getSnippets(response, output, links, getFullSnippet)
             #pprint.pprint(response, output)
                    
@@ -143,14 +160,28 @@ if doSkills:
         print "Query is: " + query
         
         
-        service = build("customsearch", "v1", developerKey=api_key)
+        try:
+            response = service.cse().list(q = query, cx = search_Engine_ID).execute()
+        except HttpError, HttpErrorArg:
+            argString = str(HttpErrorArg)
+            location = argString.find("returned \"Daily Limit Exceeded\"")
+            
+            if location != -1:
+                print "Daily Limit of queries exceeded, switching API key"
+                currentAPIKey += 1
+            
+                if currentAPIKey >= len(GOOGLE_API_KEYS):
+                    print "No Usable API keys remaining"
+                    print "Exiting..."
+                    exit()
+                else:
+                    service = build("customsearch", "v1", developerKey=GOOGLE_API_KEYS[currentAPIKey])
+
+            else:
+                print HttpErrorArg
+                print "Exiting..."
+                exit()
         
-        #file that will hold the output
-        #will create the file if it does not exist (w+)
-        counter = counter + 1
-        
-        response = service.cse().list(q = query, cx = search_Engine_ID).execute()
-                
         getSnippets(response, output, links, getFullSnippet)
         #pprint.pprint(response, output)       
         
