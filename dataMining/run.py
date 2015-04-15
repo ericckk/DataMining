@@ -14,6 +14,7 @@ from twitter.extraction import runner
 from twitter.cursor import Cursor 
 from twitter.stream import StdOutListener, Stream
 from twitter.tweet import Tweet
+from google.googleProcessing import googleJobs, googleSkills
 
 from settings import TWITTER_CURSOR_FILE, TWITTER_STREAM_FILE
 
@@ -60,9 +61,16 @@ def twitterStreamClean(test):
             print(tweet)
             print(cleanText)
             print('-------------------')
-    file.close()    
+    file.close()
     
-available_actions = {"cursor": twitterCursor, "stream": twitterStream, "cursorclean": twitterCursorClean,}
+def googleGetJobTitles(jobName):
+    googleJobs(jobName)
+    
+def googleGetSkills(jobName):
+    googleSkills(jobName)
+        
+    
+available_actions = {"cursor": twitterCursor, "stream": twitterStream, "cursorclean": twitterCursorClean, "googlejobs": googleGetJobTitles, "googleskills": googleGetSkills,}
 
 if __name__=='__main__':
     
