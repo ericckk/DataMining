@@ -51,9 +51,6 @@ GOOGLE_API_KEYS = ["AIzaSyCHwlWEjEcdeH1KRnmIi9fq5Dnx2JBeVRw", "AIzaSyAqa0-CM0ZZ8
 #Google: Search engine ID
 GOOGLE_SEARCH_ENGINE_ID = "016745198537660285174:espiwqmbexg"
 
-#Google: query settings
-
-
 #Google: additional processing settings
 GOOGLE_ADDITIONAL_PROCESSING = 0
 GOOGLE_MANUAL_PROCESSING = 0
