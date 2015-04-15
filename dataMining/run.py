@@ -19,6 +19,7 @@ from google.query import runSkills, runTitles
 from google.test.googleTests import test 
 
 from settings import TWITTER_CURSOR_FILE, TWITTER_STREAM_FILE, GOOGLE_TITLE_SNIPPET_FILENAME, GOOGLE_SKILL_SNIPPET_FILENAME
+from settings import GOOGLE_PROCESS_TITLE, GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE
 
 def getArgs():
     parser = argparse.ArgumentParser(description='data mining app')
@@ -66,17 +67,17 @@ def twitterStreamClean(test):
     file.close()
 
 #GOOGLE FUNCTIONS    
-def googleGetJobTitles(jobName):
-    googleJobs(jobName)
+def googleGetJobTitles():
+    googleJobs(GOOGLE_PROCESS_TITLE)
     
-def googleGetSkills(jobName):
-    googleSkills(jobName)
+def googleGetSkills():
+    googleSkills(GOOGLE_PROCESS_TITLE)
     
-def googleQueryTitles(initialTitle):
-    runTitles(initialTitle, GOOGLE_TITLE_SNIPPET_FILENAME)
+def googleQueryTitles():
+    runTitles(GOOGLE_JOB_TITLE, GOOGLE_TITLE_SNIPPET_FILENAME)
     
-def googleQuerySkills(initialTitle, searchTitle):
-    runSkills(initialTitle, searchTitle, GOOGLE_SKILL_SNIPPET_FILENAME)
+def googleQuerySkills():
+    runSkills(GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE, GOOGLE_SKILL_SNIPPET_FILENAME)
     
 def googleAlgorithmTest():
     test()

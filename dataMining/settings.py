@@ -72,5 +72,16 @@ ADDITIONAL_STOP_WORDS_SKILLS = ["list", "others", "benefits", "after", "uses", "
                            "skill", "skills", "get", "help"]
 
 #Google: output files
+#Used for saving if using the query function
+#Used to load if using the process function
 GOOGLE_TITLE_SNIPPET_FILENAME = "softwareEngineer"
 GOOGLE_SKILL_SNIPPET_FILENAME = "softwareEngineerSkills"
+
+#Google query titles
+#Used to formulate queries
+GOOGLE_JOB_TITLE = "software engineer"
+GOOGLE_SKILL_TITLE = "software engineering"
+
+#Google processing titles
+#Used when processing snippets
+GOOGLE_PROCESS_TITLE = "software engineer"
