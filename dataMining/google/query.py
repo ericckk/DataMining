@@ -83,8 +83,8 @@ def runTitles(initialTitle, outputFile):
     
     blacklist2 = [("occupations", "including"), ("occupations", "like"), ("professions", "like")]
         
-    output = open(("output/" + outputFile + ".txt"), 'w+')
-    links = open(("output/" + outputFile + "links.txt"), 'w+')
+    output = open(("google/output/" + outputFile + ".txt"), 'w+')
+    links = open(("google/output/" + outputFile + "links.txt"), 'w+')
     
     currentAPIKey = 0;
     
@@ -150,8 +150,8 @@ def runSkills(initialTitle, searchTitle, outputFile):
     
     service = build("customsearch", "v1", developerKey=GOOGLE_API_KEYS[currentAPIKey])
     getFullSnippet = False
-    output = open(("output/" + outputFile + ".txt"), 'w+')
-    links = open(("output/" + outputFile + "links.txt"), 'w+')
+    output = open(("google/output/" + outputFile + ".txt"), 'w+')
+    links = open(("google/output/" + outputFile + "links.txt"), 'w+')
         
     for fm in form:
         if fm == "like":

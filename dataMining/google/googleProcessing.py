@@ -314,7 +314,7 @@ def processSkills(file, domain, jobSkills, querys):
 jobName - for skills this is job title that we are finding skills for
 '''
 def googleSkills(jobName):
-    file = GOOGLE_SKILL_SNIPPET_FILENAME + ".txt"
+    file = "google/output/" + GOOGLE_SKILL_SNIPPET_FILENAME + ".txt"
     temp = Job()
     jobSkills = [""]
     querySkills = ["skills such as", "skills including"]
@@ -323,26 +323,26 @@ def googleSkills(jobName):
     pp.pprint(jobSkills)
     print len(jobSkills)
     # add to database
-    j = temp.getjob("Information Technology", jobName)
-    j.skills = jobSkills
-    j.save()
+    #j = temp.getjob("Information Technology", jobName)
+    #j.skills = jobSkills
+    #j.save()
         
 '''
 jobName - for job titles this is the initial job title used for the queries
 '''
 def googleJobs(jobName):
-    file = GOOGLE_TITLE_SNIPPET_FILENAME + ".txt"
+    file = "google/output/" + GOOGLE_TITLE_SNIPPET_FILENAME + ".txt"
     jobTitles = [jobName]
     processTitles(file, "Information Technology", jobTitles)
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(jobTitles)
     print len(jobTitles)
     #add to database
-    for jt in jobTitles:
-        j = Job()
-        j.domain = "Information Technology"
-        j.title = jt
-        j.save()
+    #for jt in jobTitles:
+    #    j = Job()
+    #    j.domain = "Information Technology"
+    #    j.title = jt
+    #    j.save()
     
 
 #run(False, "software engineer", "output/outputNew.txt")

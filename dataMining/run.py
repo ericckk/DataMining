@@ -23,10 +23,14 @@ from settings import GOOGLE_PROCESS_TITLE, GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE
 
 def getArgs():
     parser = argparse.ArgumentParser(description='data mining app')
+    parser.add_argument('-gqs', '--querySkills', action='store_true')
+    parser.add_argument('-gqt', '--queryTitles', action='store_true')
+    parser.add_argument('-googleTest', '--googleAlgorithmTest', action='store_true')
+    parser.add_argument('-qetSkills', '--googleSkills', action='store_true')
+    parser.add_argument('-qetTitles', '--googleTitles', action='store_true')
     parser.add_argument('-t', '--cursorclean', type=str, action="store", )    
     parser.add_argument('-tc', '--cursor', type=str, action="store", )
     parser.add_argument('-ts', '--stream', type=str, action="store", )
-
     return parser.parse_args()
 
 def twitterCursor(query):
@@ -67,25 +71,23 @@ def twitterStreamClean(test):
     file.close()
 
 #GOOGLE FUNCTIONS    
-def googleGetJobTitles():
+def googleGetJobTitles(arg):
     googleJobs(GOOGLE_PROCESS_TITLE)
     
-def googleGetSkills():
+def googleGetSkills(arg):
     googleSkills(GOOGLE_PROCESS_TITLE)
     
-def googleQueryTitles():
+def googleQueryTitles(arg):
     runTitles(GOOGLE_JOB_TITLE, GOOGLE_TITLE_SNIPPET_FILENAME)
     
-def googleQuerySkills():
+def googleQuerySkills(arg):
     runSkills(GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE, GOOGLE_SKILL_SNIPPET_FILENAME)
     
-def googleAlgorithmTest():
+def googleAlgorithmTest(arg):
     test()
         
     
-available_actions = {"cursor": twitterCursor, "stream": twitterStream, "cursorclean": twitterCursorClean, 
-                     "googlejobs": googleGetJobTitles, "googleskills": googleGetSkills, "googleAlgorithmTest": googleAlgorithmTest,
-                     "googleQueryTitles": googleQueryTitles, "googleQuerySkills": googleQuerySkills}
+available_actions = {"cursor": twitterCursor, "stream": twitterStream, "cursorclean": twitterCursorClean, "googleTitles": googleGetJobTitles, "googleSkills": googleGetSkills, "googleAlgorithmTest": googleAlgorithmTest, "queryTitles": googleQueryTitles, "querySkills": googleQuerySkills}
 
 if __name__=='__main__':
     

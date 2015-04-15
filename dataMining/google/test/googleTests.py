@@ -2,7 +2,7 @@ from dataMining.google.googleProcessing import processTitles
 import pprint
 
 def test():
-    inputfile = "test.txt"
+    inputfile = "google/test/test.txt"
     
     expectedJobTitles = ["system analyst",
     "functional consultant",
