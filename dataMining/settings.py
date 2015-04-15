@@ -72,4 +72,5 @@ ADDITIONAL_STOP_WORDS_SKILLS = ["list", "others", "benefits", "after", "uses", "
                            "skill", "skills", "get", "help"]
 
 #Google: output files
-GOOGLE_SNIPPET_FILE_NAME = ""
+GOOGLE_TITLE_SNIPPET_FILENAME = "softwareEngineer"
+GOOGLE_SKILL_SNIPPET_FILENAME = "softwareEngineerSkills"

@@ -66,122 +66,126 @@ def getSnippets(response, output, links, getFullSnippet):
     
 ''' END OF getSnippets() FUNCTION '''
     
-api_key = "AIzaSyCHwlWEjEcdeH1KRnmIi9fq5Dnx2JBeVRw"
-search_Engine_ID = "016745198537660285174:espiwqmbexg"
-
-domain = "Information Technology"
-jobSynonym = ["jobs", "occupations", "professions"]
-form = ["such as", "including", "like"]
-
-counter = 0;
-query = "\"* Jobs such as Software Engineer\""
-
-blacklist = ["\"* Information Technology occupations including\"", "\"* Information Technology occupations like\"",
-             "\"* Information Technology professions such as\"", "\"* Information Technology professions including\"",
-             "\"* Information Technology professions like\""]
-
-blacklist2 = [("occupations", "including"), ("occupations", "like"), ("professions", "like")]
+def runTitles(initialTitle, outputFile):
+    #api_key = "AIzaSyCHwlWEjEcdeH1KRnmIi9fq5Dnx2JBeVRw"
+    search_Engine_ID = "016745198537660285174:espiwqmbexg"
     
-outputName = "outputNew"
-output = open(("output/" + outputName + ".txt"), 'w+')
-links = open(("output/" + outputName + "links.txt"), 'w+')
-
-currentAPIKey = 0;
-
-#this activates the full Snippet Capability
-getFullSnippet = False
-if(getFullSnippet ==  True):
-	output = open(("output/" + outputName + "Full.txt"), 'w+')
-
-doSkills = False
-
-service = build("customsearch", "v1", developerKey=GOOGLE_API_KEYS[currentAPIKey])
+    #domain = "Information Technology"
+    jobSynonym = ["jobs", "occupations", "professions"]
+    form = ["such as", "including", "like"]
     
-if not doSkills:
+    #counter = 0;
+    query = "\"* Jobs such as Software Engineer\""
+    
+    blacklist = ["\"* Information Technology occupations including\"", "\"* Information Technology occupations like\"",
+                 "\"* Information Technology professions such as\"", "\"* Information Technology professions including\"",
+                 "\"* Information Technology professions like\""]
+    
+    blacklist2 = [("occupations", "including"), ("occupations", "like"), ("professions", "like")]
+        
+    output = open(("output/" + outputFile + ".txt"), 'w+')
+    links = open(("output/" + outputFile + "links.txt"), 'w+')
+    
+    currentAPIKey = 0;
+    
+    #this activates the full Snippet Capability
+    getFullSnippet = False
+    if(getFullSnippet ==  True):
+        output = open(("output/" + outputFile + "Full.txt"), 'w+')
+    
+    service = build("customsearch", "v1", developerKey=GOOGLE_API_KEYS[currentAPIKey])
+        
     for js in jobSynonym:
         for fm in form:
             badQuery = False
-            for tuple in blacklist2:
-                if js == tuple[0] and fm == tuple[1]:
+            for bl in blacklist2:
+                if js == bl[0] and fm == bl[1]:
                     badQuery = True
-                
+                    
             if badQuery:
                 continue
-                
-            query = "\"* " + js + " " + fm + " software engineer" +"\""
-                
+                    
+            query = "\"* " + js + " " + fm + " " + initialTitle +"\""
+                    
             if query in blacklist:
                 continue
-                
+                    
             print "Query is: " + query
-        
+            
             try:
                 response = service.cse().list(q = query, cx = search_Engine_ID).execute()
             except HttpError, HttpErrorArg:
                 argString = str(HttpErrorArg)
                 location = argString.find("returned \"Daily Limit Exceeded\"")
-            
+                
                 if location != -1:
                     print "Daily Limit of queries exceeded, switching API key"
                     currentAPIKey += 1
-            
+                
                     if currentAPIKey >= len(GOOGLE_API_KEYS):
                         print "No Usable API keys remaining"
                         print "Exiting..."
                         exit()
                     else:
                         service = build("customsearch", "v1", developerKey=GOOGLE_API_KEYS[currentAPIKey])
-
+    
                 else:
                     print HttpErrorArg
                     print "Exiting..."
                     exit()
-         
+             
             getSnippets(response, output, links, getFullSnippet)
             #pprint.pprint(response, output)
-                   
-if doSkills:
+                       
+          
+
+def runSkills(initialTitle, searchTitle, outputFile):    
+    #api_key = "AIzaSyCHwlWEjEcdeH1KRnmIi9fq5Dnx2JBeVRw"
+    search_Engine_ID = "016745198537660285174:espiwqmbexg"
     
-    jobTitle = "software engineer"
+    #domain = "Information Technology"
+    form = ["such as", "including", "like"]
     
-    #TODO generate from jobTitle
-    queryTitle = "software engineering"
+    currentAPIKey = 0;
     
-    outputName = jobTitle.replace(" ", "")
-    output = open(("output/" + outputName + "Skills.txt"), 'w+')
-    links = open(("output/" + outputName + "links.txt"), 'w+')
-    
+    service = build("customsearch", "v1", developerKey=GOOGLE_API_KEYS[currentAPIKey])
+    getFullSnippet = False
+    output = open(("output/" + outputFile + ".txt"), 'w+')
+    links = open(("output/" + outputFile + "links.txt"), 'w+')
+        
     for fm in form:
         if fm == "like":
             continue
-        
-        query = "\"" + queryTitle + " skills " + fm + "\"" 
-        
+            
+        query = "\"" + searchTitle + " skills " + fm + "\"" 
+            
         print "Query is: " + query
-        
-        
+            
+            
         try:
             response = service.cse().list(q = query, cx = search_Engine_ID).execute()
         except HttpError, HttpErrorArg:
             argString = str(HttpErrorArg)
             location = argString.find("returned \"Daily Limit Exceeded\"")
-            
+                
             if location != -1:
                 print "Daily Limit of queries exceeded, switching API key"
                 currentAPIKey += 1
-            
+                
                 if currentAPIKey >= len(GOOGLE_API_KEYS):
                     print "No Usable API keys remaining"
                     print "Exiting..."
                     exit()
                 else:
                     service = build("customsearch", "v1", developerKey=GOOGLE_API_KEYS[currentAPIKey])
-
+    
             else:
                 print HttpErrorArg
                 print "Exiting..."
                 exit()
-        
+            
         getSnippets(response, output, links, getFullSnippet)
-        #pprint.pprint(response, output)       
+        #pprint.pprint(response, output)
         
+#runTitles("software engineer", "testOutput")
+#runSkills("software engineer", "software engineering", "testSkills")

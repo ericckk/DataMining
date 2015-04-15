@@ -15,8 +15,10 @@ from twitter.cursor import Cursor
 from twitter.stream import StdOutListener, Stream
 from twitter.tweet import Tweet
 from google.googleProcessing import googleJobs, googleSkills
+from google.query import runSkills, runTitles
+from google.test.googleTests import test 
 
-from settings import TWITTER_CURSOR_FILE, TWITTER_STREAM_FILE
+from settings import TWITTER_CURSOR_FILE, TWITTER_STREAM_FILE, GOOGLE_TITLE_SNIPPET_FILENAME, GOOGLE_SKILL_SNIPPET_FILENAME
 
 def getArgs():
     parser = argparse.ArgumentParser(description='data mining app')
@@ -62,15 +64,27 @@ def twitterStreamClean(test):
             print(cleanText)
             print('-------------------')
     file.close()
-    
+
+#GOOGLE FUNCTIONS    
 def googleGetJobTitles(jobName):
     googleJobs(jobName)
     
 def googleGetSkills(jobName):
     googleSkills(jobName)
+    
+def googleQueryTitles(initialTitle):
+    runTitles(initialTitle, GOOGLE_TITLE_SNIPPET_FILENAME)
+    
+def googleQuerySkills(initialTitle, searchTitle):
+    runSkills(initialTitle, searchTitle, GOOGLE_SKILL_SNIPPET_FILENAME)
+    
+def googleAlgorithmTest():
+    test()
         
     
-available_actions = {"cursor": twitterCursor, "stream": twitterStream, "cursorclean": twitterCursorClean, "googlejobs": googleGetJobTitles, "googleskills": googleGetSkills,}
+available_actions = {"cursor": twitterCursor, "stream": twitterStream, "cursorclean": twitterCursorClean, 
+                     "googlejobs": googleGetJobTitles, "googleskills": googleGetSkills, "googleAlgorithmTest": googleAlgorithmTest,
+                     "googleQueryTitles": googleQueryTitles, "googleQuerySkills": googleQuerySkills}
 
 if __name__=='__main__':
     

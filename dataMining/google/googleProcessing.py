@@ -10,7 +10,8 @@ from dataMining.mongo.Job import Job
 from nltk.corpus import stopwords
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
-from dataMining.settings import GOOGLE_ADDITIONAL_PROCESSING, GOOGLE_MANUAL_PROCESSING, GRAMMAR, ADDITIONAL_STOP_WORDS_SKILLS, ADDITIONAL_STOP_WORDS_TITLES, GOOGLE_SNIPPET_FILE_NAME
+from dataMining.settings import GOOGLE_ADDITIONAL_PROCESSING, GOOGLE_MANUAL_PROCESSING, GRAMMAR, ADDITIONAL_STOP_WORDS_SKILLS, ADDITIONAL_STOP_WORDS_TITLES
+from dataMining.settings import GOOGLE_TITLE_SNIPPET_FILENAME, GOOGLE_SKILL_SNIPPET_FILENAME
 
 '''
 Performs manual text processing on the given word
@@ -310,13 +311,10 @@ def processSkills(file, domain, jobSkills, querys):
 #nltk.download('all')
 
 '''
-doSkills - boolean that tells the function to process job skills
 jobName - for skills this is job title that we are finding skills for
-        for job titles this is the initial job title used for the queries
-file - the file that includes the snippets to retrieve information from
 '''
 def googleSkills(jobName):
-    file = GOOGLE_SNIPPET_FILE_NAME
+    file = GOOGLE_SKILL_SNIPPET_FILENAME + ".txt"
     temp = Job()
     jobSkills = [""]
     querySkills = ["skills such as", "skills including"]
@@ -330,13 +328,10 @@ def googleSkills(jobName):
     j.save()
         
 '''
-doSkills - boolean that tells the function to process job skills
-jobName - for skills this is job title that we are finding skills for
-        for job titles this is the initial job title used for the queries
-file - the file that includes the snippets to retrieve information from
+jobName - for job titles this is the initial job title used for the queries
 '''
 def googleJobs(jobName):
-    file = GOOGLE_SNIPPET_FILE_NAME
+    file = GOOGLE_TITLE_SNIPPET_FILENAME + ".txt"
     jobTitles = [jobName]
     processTitles(file, "Information Technology", jobTitles)
     pp = pprint.PrettyPrinter(indent=4)
