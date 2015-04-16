@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 from nltk import word_tokenize
 
 #This method parses the snippet and opens the text from the link and returns the raw data
-
+#@parameters (original snippet, link containing snippet, tolerance fo noice (x*(size of snippet)))
 def run(snippet, link, tolerance):
 	#parsing Snippet to multiple lines
 	print "Parsing snippet.."
@@ -46,11 +46,11 @@ def run(snippet, link, tolerance):
 		print ("unable to extract data from website")
 		return snippet
 	
-	return getSentences(read, snippetLines, snippet)
+	return getSentences(read, snippetLines, snippet, tolerance)
 
 
 #this method takes in the raw data and for every sentence the method compares it with the snippets, if the snippet is contained it returns the full sentence if not it switches to a word by word comparisons 
-def getSentences(read,snippetLines, snippet):
+def getSentences(read,snippetLines, snippet, tolerance):
 	try:    
 		#getting the sentences		
 		print "Looking for full snippet within sentences of the data returned.."

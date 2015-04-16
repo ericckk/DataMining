@@ -77,6 +77,7 @@ def run():
 #run()
 
 #remote call from other Modules
+#@parameters(link tobe opened, filaname to store results, boolean if data to be returned or written)
 def remote (url, filename, write):
 	#calling the defined functions
 	br = browser()
