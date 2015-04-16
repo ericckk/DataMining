@@ -34,6 +34,3 @@ Snippet: u'Sep 8, 2014 ... The current lists cover a wide range of occupations s
 Snippet: u'Mar 1, 2015 ... ... and diverse populations for a career path in the most in-demand, high-paying \noccupations such as computer programmer, software engineer,\xa0...'
 Snippet: u'With the development of the high technology, we cannot live without computers \nand internet. Some professions such as software engineer or some office\xa0...'
 Snippet: u'We ended up with two men and three women between the ages of 22 and 33. \nAmong them we professions such as software engineer, interaction designer, \nand\xa0...'
-Snippet: u"... tal.12 Data from the U.S. Department of Labor's Bureau of Labor Statistics \nconsistently rank information technology professions such as software engineer \nand\xa0..."
-Snippet: u'Chapter 6. Global Outsourcing of Information Processing. Services. Uday M. Apte \nand Richard O. Mason. 1. Introduction. The low productivity growth and\xa0...'
-Snippet: u'Jun 16, 2014 ... In the present sample, respondents held positions from a number of professions \nincluding software engineer, physician, teacher, and librarian.'

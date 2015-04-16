@@ -8,7 +8,7 @@ __email__ = "justinmilanovic@gmail.com"
 __status__ = "Development"
 
 
-import argparse, pickle
+import argparse, pickle, sys
 
 from twitter.extraction import runner
 from twitter.cursor import Cursor 
@@ -23,11 +23,6 @@ from settings import GOOGLE_PROCESS_TITLE, GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE
 
 def getArgs():
     parser = argparse.ArgumentParser(description='data mining app')
-    parser.add_argument('-gqs', '--querySkills', action='store_true')
-    parser.add_argument('-gqt', '--queryTitles', action='store_true')
-    parser.add_argument('-googleTest', '--googleAlgorithmTest', action='store_true')
-    parser.add_argument('-qetSkills', '--googleSkills', action='store_true')
-    parser.add_argument('-qetTitles', '--googleTitles', action='store_true')
     parser.add_argument('-t', '--cursorclean', type=str, action="store", )    
     parser.add_argument('-tc', '--cursor', type=str, action="store", )
     parser.add_argument('-ts', '--stream', type=str, action="store", )
@@ -71,27 +66,38 @@ def twitterStreamClean(test):
     file.close()
 
 #GOOGLE FUNCTIONS    
-def googleGetJobTitles(arg):
+def googleGetJobTitles():
     googleJobs(GOOGLE_PROCESS_TITLE)
     
-def googleGetSkills(arg):
+def googleGetSkills():
     googleSkills(GOOGLE_PROCESS_TITLE)
     
-def googleQueryTitles(arg):
+def googleQueryTitles():
     runTitles(GOOGLE_JOB_TITLE, GOOGLE_TITLE_SNIPPET_FILENAME)
     
-def googleQuerySkills(arg):
+def googleQuerySkills():
     runSkills(GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE, GOOGLE_SKILL_SNIPPET_FILENAME)
     
-def googleAlgorithmTest(arg):
+def googleAlgorithmTest():
     test()
         
     
-available_actions = {"cursor": twitterCursor, "stream": twitterStream, "cursorclean": twitterCursorClean, "googleTitles": googleGetJobTitles, "googleSkills": googleGetSkills, "googleAlgorithmTest": googleAlgorithmTest, "queryTitles": googleQueryTitles, "querySkills": googleQuerySkills}
+available_actions = {"cursor": twitterCursor, "stream": twitterStream, "cursorclean": twitterCursorClean,}
 
 if __name__=='__main__':
-    
-    args = vars(getArgs())
-    l = [{k:v} for k, v in args.iteritems() if v is not None]
-    method, methodArgs = l.pop().popitem()
-    available_actions[method](methodArgs)
+    if len(sys.argv) == 2:
+        if sys.argv[1] == "-qs":
+            googleQuerySkills()
+        elif sys.argv[1] == "-qt":
+            googleQueryTitles()
+        elif sys.argv[1] == "-gt":
+            googleAlgorithmTest()
+        elif sys.argv[1] == "-ps":
+            googleGetSkills()
+        elif sys.argv[1] == "-pt":
+            googleGetJobTitles()
+    else:
+        args = vars(getArgs())
+        l = [{k:v} for k, v in args.iteritems() if v is not None]
+        method, methodArgs = l.pop().popitem()
+        available_actions[method](methodArgs)

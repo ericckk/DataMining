@@ -81,7 +81,7 @@ def runTitles(initialTitle, outputFile):
                  "\"* Information Technology professions such as\"", "\"* Information Technology professions including\"",
                  "\"* Information Technology professions like\""]
     
-    blacklist2 = [("occupations", "including"), ("occupations", "like"), ("professions", "like")]
+    blacklist2 = [("occupations", "including"), ("occupations", "like"), ("professions", "including"), ("professions", "like")]
         
     output = open(("google/output/" + outputFile + ".txt"), 'w+')
     links = open(("google/output/" + outputFile + "links.txt"), 'w+')
