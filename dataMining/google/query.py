@@ -39,15 +39,6 @@ def getSnippets(response, output, links, getFullSnippet):
 		                try:
 					
 					#parsing the snippet to try an remove as much niose initially as posible
-					
-					'''
-					snippet_full=re.sub('\\t', '-', snippet_full)
-					snippet_full=re.sub('\\r', '-', snippet_full)			
-					snippet_full=re.sub('\\n', '-', snippet_full)		
-					regex = re.compile('[^a-zA-Z\s,]')
-					snippet_full=regex.sub(' ', snippet_full)
-					#snippet_full=re.sub('\_\_+', '_', snippet_full)
-					'''
 					snippetArray= snippet_full.split()
 					snippet_full = ' '.join(snippetArray)					
 					regex = re.compile('[^a-zA-Z\s,\']')
