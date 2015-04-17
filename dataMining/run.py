@@ -2,7 +2,6 @@
 #! /usr/bin/env python
 
 __author__ = "Justin Milanovic"
-__copyright__ = "Copyright 2015, HireGround"
 __version__ = "1.0.0"
 __email__ = "justinmilanovic@gmail.com"
 __status__ = "Development"
@@ -14,6 +13,7 @@ from twitter.extraction import runner
 from twitter.cursor import Cursor 
 from twitter.stream import StdOutListener, Stream
 from twitter.tweet import Tweet
+from mongo.Job import Job
 from google.googleProcessing import googleJobs, googleSkills
 from google.query import runSkills, runTitles
 from google.test.googleTests import test 
@@ -43,6 +43,12 @@ def pickleLoader(pklFile):
             yield pickle.load(pklFile)
     except EOFError:
         pass
+
+def twitterDatabase(text):
+    job = Job()
+    job.domain = "Information Technology"
+    job.title = text
+    job.save()    
     
 def twitterCursorClean(test):
 
@@ -50,6 +56,7 @@ def twitterCursorClean(test):
         for tweet in pickleLoader(f):
             print(tweet)
             cleanText = runner(tweet)
+            twitterDatabase(cleanText)
             print("ANSW: " + cleanText)
             print('-------------------')
     file.close()
@@ -59,7 +66,7 @@ def twitterStreamClean(test):
     with open(TWITTER_STREAM_FILE, 'r') as f:
         for tweet in pickleLoader(f):
             cleanText = runner(tweet)
-
+            twitterDatabase(cleanText)
             print(tweet)
             print(cleanText)
             print('-------------------')
