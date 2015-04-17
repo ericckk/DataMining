@@ -105,6 +105,8 @@ def runTitles(initialTitle, outputFile):
             
             try:
                 response = service.cse().list(q = query, cx = search_Engine_ID).execute()
+                getSnippets(response, output, links, getFullSnippet)
+                #pprint.pprint(response, output)
             except HttpError, HttpErrorArg:
                 argString = str(HttpErrorArg)
                 location = argString.find("returned \"Daily Limit Exceeded\"")
@@ -124,9 +126,6 @@ def runTitles(initialTitle, outputFile):
                     print HttpErrorArg
                     print "Exiting..."
                     exit()
-             
-            getSnippets(response, output, links, getFullSnippet)
-            #pprint.pprint(response, output)
                        
           
 
@@ -154,7 +153,9 @@ def runSkills(initialTitle, searchTitle, outputFile):
             
             
         try:
-            response = service.cse().list(q = query, cx = search_Engine_ID).execute()
+            response = service.cse().list(q = query, cx = search_Engine_ID).execute()            
+            getSnippets(response, output, links, getFullSnippet)
+            #pprint.pprint(response, output)
         except HttpError, HttpErrorArg:
             argString = str(HttpErrorArg)
             location = argString.find("returned \"Daily Limit Exceeded\"")
@@ -174,9 +175,7 @@ def runSkills(initialTitle, searchTitle, outputFile):
                 print HttpErrorArg
                 print "Exiting..."
                 exit()
-            
-        getSnippets(response, output, links, getFullSnippet)
-        #pprint.pprint(response, output)
+
         
 #runTitles("software engineer", "testOutput")
 #runSkills("software engineer", "software engineering", "testSkills")
