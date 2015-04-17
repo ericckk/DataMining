@@ -1,5 +1,4 @@
 __author__ = "Justin Milanovic"
-__copyright__ = "Copyright 2015, HireGround"
 __version__ = "1.0.0"
 __email__ = "justinmilanovic@gmail.com"
 __status__ = "Development"
@@ -21,6 +20,7 @@ class StdOutListener(tweepy.StreamListener):
         text = decoded['text']
         name = decoded['user']['name']
         screenName = decoded['user']['screen_name']
+        # description is depricated in noise algorithm
         description = decoded['user']['description']
         hashtags = decoded['entities']['hashtags']
         location = decoded['user']['location']

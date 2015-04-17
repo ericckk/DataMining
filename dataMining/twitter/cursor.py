@@ -31,6 +31,7 @@ class Cursor(object):
                     text = tweet.text
                     name = tweet.author.name
                     screenName = tweet.author.screen_name
+                    #description is depricated in noise algorithm
                     description = tweet.user.description
                     hashtags = tweet.entities.get('hashtags')
                     location = tweet.user.location
@@ -42,5 +43,6 @@ class Cursor(object):
                 print('pages: ' + str(pageCount) + ' tweet count: ' + str(tweetCount) + '\n')
         except tweepy.TweepError:
             print('rate limit exceeded')
+            # alternative: enter 15 minute time delay to continue instead of exiting
             os.sys.exit(0)
 

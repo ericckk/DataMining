@@ -123,8 +123,7 @@ def runner(tweet):
         cleanTweet.text = phraseRight(cleanTweet)        
         text = cleaner(cleanTweet.text, locationList)
         
-        # ner - organization, location, person
-        #nerList = stanfordContext(text)       
+        # ner - organization, location, person      
         text = cleaner(text, nerList)
         # stopwords
         text = cleaner(text, stopWords(text))
