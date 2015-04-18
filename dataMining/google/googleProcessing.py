@@ -6,12 +6,12 @@ Created on Jan 20, 2015
 
 import pprint
 import nltk
-from dataMining.mongo.Job import Job
+from mongo.Job import Job
 from nltk.corpus import stopwords
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
-from dataMining.settings import GOOGLE_ADDITIONAL_PROCESSING, GOOGLE_MANUAL_PROCESSING, GRAMMAR, ADDITIONAL_STOP_WORDS_SKILLS, ADDITIONAL_STOP_WORDS_TITLES
-from dataMining.settings import GOOGLE_TITLE_SNIPPET_FILENAME, GOOGLE_SKILL_SNIPPET_FILENAME
+from settings import GOOGLE_ADDITIONAL_PROCESSING, GOOGLE_MANUAL_PROCESSING, GRAMMAR, ADDITIONAL_STOP_WORDS_SKILLS, ADDITIONAL_STOP_WORDS_TITLES
+from settings import GOOGLE_TITLE_SNIPPET_FILENAME, GOOGLE_SKILL_SNIPPET_FILENAME, GET_FULL_SNIPPET
 
 '''
 Performs manual text processing on the given word
@@ -314,7 +314,10 @@ def processSkills(file, domain, jobSkills, querys):
 jobName - for skills this is job title that we are finding skills for
 '''
 def googleSkills(jobName):
-    file = "google/output/" + GOOGLE_SKILL_SNIPPET_FILENAME + ".txt"
+    if(GET_FULL_SNIPPET):
+	file = "google/output/" + GOOGLE_SKILL_SNIPPET_FILENAME + "Full.txt"
+    else:
+	file = "google/output/" + GOOGLE_SKILL_SNIPPET_FILENAME + ".txt"
     temp = Job()
     jobSkills = [""]
     querySkills = ["skills such as", "skills including"]
@@ -323,26 +326,29 @@ def googleSkills(jobName):
     pp.pprint(jobSkills)
     print len(jobSkills)
     # add to database
-    #j = temp.getjob("Information Technology", jobName)
-    #j.skills = jobSkills
-    #j.save()
+    j = temp.getjob("Information Technology", jobName)
+    j.skills = jobSkills
+    j.save()
         
 '''
 jobName - for job titles this is the initial job title used for the queries
 '''
 def googleJobs(jobName):
-    file = "google/output/" + GOOGLE_TITLE_SNIPPET_FILENAME + ".txt"
+    if(GET_FULL_SNIPPET):
+	file = "google/output/" + GOOGLE_TITLE_SNIPPET_FILENAME + "Full.txt"
+    else:
+    	file = "google/output/" + GOOGLE_TITLE_SNIPPET_FILENAME + ".txt"
     jobTitles = [jobName]
     processTitles(file, "Information Technology", jobTitles)
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(jobTitles)
     print len(jobTitles)
     #add to database
-    #for jt in jobTitles:
-    #    j = Job()
-    #    j.domain = "Information Technology"
-    #    j.title = jt
-    #    j.save()
+    for jt in jobTitles:
+        j = Job()
+        j.domain = "Information Technology"
+        j.title = jt
+        j.save()
     
 
 #run(False, "software engineer", "output/outputNew.txt")

@@ -1,7 +1,7 @@
 from apiclient.discovery import build
 from webScraper import fullSnippet
 import re
-from dataMining.settings import GOOGLE_API_KEYS
+from settings import GOOGLE_API_KEYS
 from googleapiclient.errors import HttpError
 
 
@@ -57,7 +57,7 @@ def getSnippets(response, output, links, getFullSnippet):
     
 ''' END OF getSnippets() FUNCTION '''
     
-def runTitles(initialTitle, outputFile):
+def runTitles(initialTitle, outputFile, getFullSnippet):
     #api_key = "AIzaSyCHwlWEjEcdeH1KRnmIi9fq5Dnx2JBeVRw"
     search_Engine_ID = "016745198537660285174:espiwqmbexg"
     
@@ -74,16 +74,17 @@ def runTitles(initialTitle, outputFile):
     
     blacklist2 = [("occupations", "including"), ("occupations", "like"), ("professions", "including"), ("professions", "like")]
         
-    output = open(("google/output/" + outputFile + ".txt"), 'w+')
+   
     links = open(("google/output/" + outputFile + "links.txt"), 'w+')
     
     currentAPIKey = 0;
     
-    #this activates the full Snippet Capability
-    getFullSnippet = False
+    #this stores the full Snippets Capability
     if(getFullSnippet ==  True):
-        output = open(("output/" + outputFile + "Full.txt"), 'w+')
-    
+        output = open(("google/output/" + outputFile + "Full.txt"), 'w+')
+    else:
+	 output = open(("google/output/" + outputFile + ".txt"), 'w+')   
+ 
     service = build("customsearch", "v1", developerKey=GOOGLE_API_KEYS[currentAPIKey])
         
     for js in jobSynonym:
@@ -130,7 +131,7 @@ def runTitles(initialTitle, outputFile):
                        
           
 
-def runSkills(initialTitle, searchTitle, outputFile):    
+def runSkills(initialTitle, searchTitle, outputFile, getFullSnippet):    
     #api_key = "AIzaSyCHwlWEjEcdeH1KRnmIi9fq5Dnx2JBeVRw"
     search_Engine_ID = "016745198537660285174:espiwqmbexg"
     
@@ -140,8 +141,10 @@ def runSkills(initialTitle, searchTitle, outputFile):
     currentAPIKey = 0;
     
     service = build("customsearch", "v1", developerKey=GOOGLE_API_KEYS[currentAPIKey])
-    getFullSnippet = False
-    output = open(("google/output/" + outputFile + ".txt"), 'w+')
+    if(getFullSnippet):
+    	output = open(("google/output/" + outputFile + "Full.txt"), 'w+')
+    else:
+	output = open(("google/output/" + outputFile + ".txt"), 'w+')
     links = open(("google/output/" + outputFile + "links.txt"), 'w+')
         
     for fm in form:

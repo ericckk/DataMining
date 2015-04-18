@@ -19,7 +19,7 @@ from google.query import runSkills, runTitles
 from google.test.googleTests import test 
 
 from settings import TWITTER_CURSOR_FILE, TWITTER_STREAM_FILE, GOOGLE_TITLE_SNIPPET_FILENAME, GOOGLE_SKILL_SNIPPET_FILENAME
-from settings import GOOGLE_PROCESS_TITLE, GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE
+from settings import GOOGLE_PROCESS_TITLE, GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE, GET_FULL_SNIPPET
 
 def getArgs():
     parser = argparse.ArgumentParser(description='data mining app')
@@ -73,11 +73,15 @@ def googleGetSkills():
     googleSkills(GOOGLE_PROCESS_TITLE)
     
 def googleQueryTitles():
-    runTitles(GOOGLE_JOB_TITLE, GOOGLE_TITLE_SNIPPET_FILENAME)
+    runTitles(GOOGLE_JOB_TITLE, GOOGLE_TITLE_SNIPPET_FILENAME, False)
+    if(GET_FULL_SNIPPET):
+	runTitles(GOOGLE_JOB_TITLE, GOOGLE_TITLE_SNIPPET_FILENAME, True)
     
 def googleQuerySkills():
-    runSkills(GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE, GOOGLE_SKILL_SNIPPET_FILENAME)
-    
+    runSkills(GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE, GOOGLE_SKILL_SNIPPET_FILENAME, False)
+    if(GET_FULL_SNIPPET):
+	runSkills(GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE, GOOGLE_SKILL_SNIPPET_FILENAME, True)
+	
 def googleAlgorithmTest():
     test()
         
@@ -89,8 +93,8 @@ if __name__=='__main__':
         if sys.argv[1] == "-qs":
             googleQuerySkills()
         elif sys.argv[1] == "-qt":
-            googleQueryTitles()
-        elif sys.argv[1] == "-gt":
+            googleQueryTitles()       
+	elif sys.argv[1] == "-gt":
             googleAlgorithmTest()
         elif sys.argv[1] == "-ps":
             googleGetSkills()
