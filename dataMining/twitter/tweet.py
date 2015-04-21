@@ -1,4 +1,5 @@
 __author__ = "Justin Milanovic"
+__copyright__ = "Copyright 2015, HireGround"
 __version__ = "1.0.0"
 __email__ = "justinmilanovic@gmail.com"
 __status__ = "Development"
@@ -93,7 +94,7 @@ class Tweet(object):
         metaData = []
         metaData = self._processMetaData(metaData, self._name)
         metaData = self._processMetaData(metaData, self._screenName)
-        #description depricated from noise algorithm
+        #depricated from algorithm
         #metaData = self._processMetaData(metaData, self._description)
         metaData = self._processMetaData(metaData, self._hashtags)
         metaData = self._processMetaData(metaData, self._location)

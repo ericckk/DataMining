@@ -1,7 +1,7 @@
 from apiclient.discovery import build
 from webScraper import fullSnippet
 import re
-from dataMining.settings import GOOGLE_API_KEYS
+from settings import GOOGLE_API_KEYS
 from googleapiclient.errors import HttpError
 
 
@@ -39,6 +39,15 @@ def getSnippets(response, output, links, getFullSnippet):
 		                try:
 					
 					#parsing the snippet to try an remove as much niose initially as posible
+					
+					'''
+					snippet_full=re.sub('\\t', '-', snippet_full)
+					snippet_full=re.sub('\\r', '-', snippet_full)			
+					snippet_full=re.sub('\\n', '-', snippet_full)		
+					regex = re.compile('[^a-zA-Z\s,]')
+					snippet_full=regex.sub(' ', snippet_full)
+					#snippet_full=re.sub('\_\_+', '_', snippet_full)
+					'''
 					snippetArray= snippet_full.split()
 					snippet_full = ' '.join(snippetArray)					
 					regex = re.compile('[^a-zA-Z\s,\']')
@@ -153,7 +162,7 @@ def runSkills(initialTitle, searchTitle, outputFile):
             
             
         try:
-            response = service.cse().list(q = query, cx = search_Engine_ID).execute()            
+            response = service.cse().list(q = query, cx = search_Engine_ID).execute()
             getSnippets(response, output, links, getFullSnippet)
             #pprint.pprint(response, output)
         except HttpError, HttpErrorArg:
@@ -175,7 +184,6 @@ def runSkills(initialTitle, searchTitle, outputFile):
                 print HttpErrorArg
                 print "Exiting..."
                 exit()
-
         
 #runTitles("software engineer", "testOutput")
 #runSkills("software engineer", "software engineering", "testSkills")

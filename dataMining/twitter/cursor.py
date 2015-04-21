@@ -5,8 +5,8 @@ __status__ = "Development"
 
 
 import tweepy, pickle, os
-from dataMining.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
-from dataMining.twitter.tweet import Tweet
+from settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
+from twitter.tweet import Tweet
 
 class Cursor(object):
     def __init__(self, filehandle):
@@ -31,7 +31,6 @@ class Cursor(object):
                     text = tweet.text
                     name = tweet.author.name
                     screenName = tweet.author.screen_name
-                    #description is depricated in noise algorithm
                     description = tweet.user.description
                     hashtags = tweet.entities.get('hashtags')
                     location = tweet.user.location
@@ -43,6 +42,5 @@ class Cursor(object):
                 print('pages: ' + str(pageCount) + ' tweet count: ' + str(tweetCount) + '\n')
         except tweepy.TweepError:
             print('rate limit exceeded')
-            # alternative: enter 15 minute time delay to continue instead of exiting
             os.sys.exit(0)
 

@@ -1,12 +1,13 @@
 __author__ = "Justin Milanovic"
+__copyright__ = "Copyright 2015, HireGround"
 __version__ = "1.0.0"
 __email__ = "justinmilanovic@gmail.com"
 __status__ = "Development"
 
 
 import tweepy, json, pickle
-from dataMining.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
-from dataMining.twitter.tweet import Tweet
+from settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
+from twitter.tweet import Tweet
 
 
 class StdOutListener(tweepy.StreamListener):
@@ -20,7 +21,6 @@ class StdOutListener(tweepy.StreamListener):
         text = decoded['text']
         name = decoded['user']['name']
         screenName = decoded['user']['screen_name']
-        # description is depricated in noise algorithm
         description = decoded['user']['description']
         hashtags = decoded['entities']['hashtags']
         location = decoded['user']['location']

@@ -2,6 +2,7 @@
 #! /usr/bin/env python
 
 __author__ = "Justin Milanovic"
+__copyright__ = "Copyright 2015, HireGround"
 __version__ = "1.0.0"
 __email__ = "justinmilanovic@gmail.com"
 __status__ = "Development"
@@ -13,10 +14,10 @@ from twitter.extraction import runner
 from twitter.cursor import Cursor 
 from twitter.stream import StdOutListener, Stream
 from twitter.tweet import Tweet
-from mongo.Job import Job
 from google.googleProcessing import googleJobs, googleSkills
 from google.query import runSkills, runTitles
 from google.test.googleTests import test 
+from mongo.Job import Job
 
 from settings import TWITTER_CURSOR_FILE, TWITTER_STREAM_FILE, GOOGLE_TITLE_SNIPPET_FILENAME, GOOGLE_SKILL_SNIPPET_FILENAME
 from settings import GOOGLE_PROCESS_TITLE, GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE
@@ -43,12 +44,6 @@ def pickleLoader(pklFile):
             yield pickle.load(pklFile)
     except EOFError:
         pass
-
-def twitterDatabase(text):
-    job = Job()
-    job.domain = "Information Technology"
-    job.title = text
-    job.save()    
     
 def twitterCursorClean(test):
 
@@ -56,7 +51,6 @@ def twitterCursorClean(test):
         for tweet in pickleLoader(f):
             print(tweet)
             cleanText = runner(tweet)
-            twitterDatabase(cleanText)
             print("ANSW: " + cleanText)
             print('-------------------')
     file.close()
@@ -66,7 +60,7 @@ def twitterStreamClean(test):
     with open(TWITTER_STREAM_FILE, 'r') as f:
         for tweet in pickleLoader(f):
             cleanText = runner(tweet)
-            twitterDatabase(cleanText)
+
             print(tweet)
             print(cleanText)
             print('-------------------')
@@ -87,6 +81,10 @@ def googleQuerySkills():
     
 def googleAlgorithmTest():
     test()
+    
+def dataBaseView():
+    data = Job()
+    data.printall()
         
     
 available_actions = {"cursor": twitterCursor, "stream": twitterStream, "cursorclean": twitterCursorClean,}
@@ -103,6 +101,8 @@ if __name__=='__main__':
             googleGetSkills()
         elif sys.argv[1] == "-pt":
             googleGetJobTitles()
+        elif sys.argv[1] == "-printData":
+            dataBaseView()
     else:
         args = vars(getArgs())
         l = [{k:v} for k, v in args.iteritems() if v is not None]
