@@ -1,0 +1,2 @@
+Snippet: u'Systems Analyst skills such as requirements determination, system testing, \nsoftware release controls, systems development lifecycle management. \nExperience\xa0...'
+Snippet: u'Technical Capability \u2013 Excellent business/systems analyst skills including trouble\n-shooting with applications including commercial underwriter systems and\xa0...'

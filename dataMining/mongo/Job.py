@@ -13,9 +13,9 @@ class Job(object):
         self._title = None
         self._skills = []
         
-        #con = Connection()
-        #db = con.testdatabase
-        #self.dbconnect = db.jobs        
+        con = Connection()
+        db = con.testdatabase
+        self.dbconnect = db.jobs        
     
     def save(self):
         if self._id == None:
@@ -75,7 +75,7 @@ class Job(object):
                     temp_list.sort()
             
                 for x in temp_list:
-                    print('\t' + x)
+                    print(x)
             print('-'*40)
         
     @property

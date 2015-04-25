@@ -1,0 +1,2 @@
+Snippet: u'To use Pentaho Metadata Editor, you must have database administrator skills (\nsuch as knowing how to import tables, create relationships between tables,\xa0...'
+Snippet: u'Esri Geo-database administrator skills including data models and database \ndesign, CASE tools, and geo-database configuration & administration. \u2022 \nArcObjects\xa0...'

@@ -17,6 +17,7 @@ from twitter.tweet import Tweet
 from google.googleProcessing import googleJobs, googleSkills
 from google.query import runSkills, runTitles
 from google.test.googleTests import test 
+from mongo.Job import Job
 
 from settings import TWITTER_CURSOR_FILE, TWITTER_STREAM_FILE, GOOGLE_TITLE_SNIPPET_FILENAME, GOOGLE_SKILL_SNIPPET_FILENAME
 from settings import GOOGLE_PROCESS_TITLE, GOOGLE_JOB_TITLE, GOOGLE_SKILL_TITLE
@@ -80,6 +81,10 @@ def googleQuerySkills():
     
 def googleAlgorithmTest():
     test()
+    
+def dataBaseView():
+    data = Job()
+    data.printall()
         
     
 available_actions = {"cursor": twitterCursor, "stream": twitterStream, "cursorclean": twitterCursorClean,}
@@ -96,6 +101,8 @@ if __name__=='__main__':
             googleGetSkills()
         elif sys.argv[1] == "-pt":
             googleGetJobTitles()
+        elif sys.argv[1] == "-printData":
+            dataBaseView()
     else:
         args = vars(getArgs())
         l = [{k:v} for k, v in args.iteritems() if v is not None]
