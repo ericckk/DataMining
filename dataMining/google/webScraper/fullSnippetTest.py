@@ -6,7 +6,6 @@ linkFile = "../output/outputNewlinks.txt"
 try: 
 	f = open(linkFile)
 except IOError:
-	print "dammit all"
 #	query.runTitles("Software Engineering", "outputNew", false)
 #	f = open(linkFile)
 
