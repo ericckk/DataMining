@@ -6,7 +6,7 @@ Created on Jan 20, 2015
 
 import pprint
 import nltk
-#from mongo.Job import Job
+from mongo.Job import Job
 from nltk.corpus import stopwords
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
@@ -318,7 +318,7 @@ def googleSkills(jobName):
 	file = "google/output/" + GOOGLE_SKILL_SNIPPET_FILENAME + "Full.txt"
     else:
 	file = "google/output/" + GOOGLE_SKILL_SNIPPET_FILENAME + ".txt"
-    #j = Job()
+    j = Job()
     jobSkills = [""]
     querySkills = ["skills such as", "skills including"]
     processSkills(file, "Information Technology", jobSkills, querySkills)
@@ -326,9 +326,9 @@ def googleSkills(jobName):
     pp.pprint(jobSkills)
     print len(jobSkills)
     # add to database
-    #j.getjob("Information Technology", jobName)
-    #j.skills = jobSkills
-    #j.save()
+    j.getjob("Information Technology", jobName)
+    j.skills = jobSkills
+    j.save()
         
 '''
 jobName - for job titles this is the initial job title used for the queries
@@ -344,11 +344,11 @@ def googleJobs(jobName):
     pp.pprint(jobTitles)
     print len(jobTitles)
     #add to database
-    #for jt in jobTitles:
-     #   j = Job()
-     #   j.domain = "Information Technology"
-     #   j.title = jt
-     #   j.save()
+    for jt in jobTitles:
+        j = Job()
+        j.domain = "Information Technology"
+        j.title = jt
+        j.save()
     
 
 #run(False, "software engineer", "output/outputNew.txt")
